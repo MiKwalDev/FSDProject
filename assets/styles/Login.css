@@ -1,0 +1,97 @@
+.login {
+    margin: 0 auto;
+    width: 95%;
+}
+
+.login .title {
+    margin-bottom: 10px;
+}
+
+.login .title h1 {
+    font-family: "Poppins";
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.login .title hr {
+    margin: 0;
+    padding: 0;
+    width: 10rem;
+    border: 2px solid var(--primary-btn-color);
+    border-radius: 5px;
+}
+
+.login .messagefield {
+    display: flex;
+}
+
+.login .message {
+    text-align: center;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    padding: 1rem 1rem;
+    margin: 1rem auto 1rem;
+    width: 100%;
+}
+
+.err-message {
+    color: var(--primary-err-color);
+    background-color: var(--secondary-err-color);
+    border-color: var(--tertiary-err-color);
+}
+
+.login .form {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem auto;
+}
+
+.login .form .input-group {
+    display: inline-block;
+    border: 1px solid var(--primary-input-color);
+    border-radius: 5px;
+    background-color: var(--primary-input-color);
+    width: 80%;
+    margin: 5px auto;
+    min-height: 40px;
+    padding-left: 5px;
+}
+
+.login .form .input-group .label {
+    display: block;
+    font-size: 1rem;
+    color: var(--primary-label-color);
+}
+
+.login .form .input-group input {
+    outline: none;
+    border: none;
+    display: block;
+    line-height: 1.2em;
+    font-size: 14pt;
+    font-weight: bold;
+    color: var(--secondary-bg-color);
+    width: 90%;
+    background-color: var(--primary-input-color);
+}
+
+.login input:focus {
+    height: 40px;
+}
+
+.login .form .validation {
+    display: flex;
+    justify-content: end;
+    width: 80%;
+    margin: 5px auto;
+}
+
+.login .form .validation .btn {
+    border: none;
+    height: 40px;
+    border-radius: 5px;
+    background-color: var(--primary-btn-color);
+    color: var(--primary-font-color);
+    text-align: center;
+    font-weight: bold;
+}

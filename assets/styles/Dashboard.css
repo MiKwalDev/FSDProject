@@ -1,0 +1,22 @@
+.dashboard {
+    margin: 0 auto;
+    width: 95%;
+}
+
+.dashboard .title {
+    margin-bottom: 10px;
+}
+
+.dashboard .title h1 {
+    font-family: "Poppins";
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.dashboard .title hr {
+    margin: 0;
+    padding: 0;
+    width: 10rem;
+    border: 2px solid var(--primary-btn-color);
+    border-radius: 5px;
+}
