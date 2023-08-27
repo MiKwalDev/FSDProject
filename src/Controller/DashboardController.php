@@ -23,12 +23,11 @@ class DashboardController extends AbstractController
         return !$user ? $this->json("Aucun utilisateur") : $this->json($user);
         
         /* try {
-            $token = IGDBUtils::authenticate("e4xi3wg152mfprm429eeo7o4w50foi", "4xy7b25c659zezu4pigjam4a2u5kan")->access_token;
+            $token = IGDBUtils::authenticate($_ENV['CLIENT_ID'], $_ENV['CLIENT_SECRET'])->access_token;
         } catch (Exception $e) {
             return $this->json($e->getMessage());
         }
-
-        $igdb = new IGDB("e4xi3wg152mfprm429eeo7o4w50foi", $token);
+        $igdb = new IGDB($_ENV['CLIENT_ID'], $token);
 
         try {
             $game = $igdb->game('search "uncharted 4"; fields name,cover; limit 1;');

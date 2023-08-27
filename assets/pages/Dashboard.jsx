@@ -21,9 +21,9 @@ const Dashboard = () => {
     error
   } = useGetCurrentUserDataQuery()
 
-  /* useEffect(() => {
+  useEffect(() => {
   console.log(userData)
-  }, [userData]) */
+  }, [userData])
 
   useEffect(() => {
     document.title = "Tableau de bord"
