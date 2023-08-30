@@ -60,7 +60,7 @@ const Register = () => {
   const content = isLoading ? (
     <h1>Loading...</h1>
   ) : (
-    <section className="register">
+    <section className="container register">
       <div className="title">
         <h1>Inscription</h1>
         <hr />

@@ -13,12 +13,17 @@
     --secondary-bg-color: #444141;
 
     --primary-font-color: #FFFFFF;
+    --secondary-font-color: #000000;
     
     --primary-btn-color: #DF580C;
 
     --primary-err-color: #842029;
     --secondary-err-color: #f8d7da;
     --tertiary-err-color: #f5c2c7;
+
+    --primary-success-color: #0f5132;
+    --secondary-success-color: #d1e7dd;
+    --tertiary-success-color: #badbcc;
 
     --primary-input-color: #D9D9D9;
     --primary-label-color: #827E7E;
@@ -30,6 +35,10 @@ html, body {
     background-color: var(--secondary-bg-color);
     box-sizing: border-box;
     font-family: "Poppins";
+}
+
+#app {
+    margin-top: 45px;
 }
 
 .container {
@@ -45,4 +54,37 @@ h1 {
     font-family: "NicoMoji";
     font-weight: 400;
     color: var(--primary-font-color);
+}
+
+h2 {
+    color: var(--primary-font-color);
+}
+
+.wrapper-link {
+    text-decoration: none;
+}
+
+.messagefield {
+    display: flex;
+}
+
+.message {
+    text-align: center;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    padding: 1rem 1rem;
+    margin: 1rem auto 1rem;
+    width: 100%;
+}
+
+.err-message {
+    color: var(--primary-err-color);
+    background-color: var(--secondary-err-color);
+    border-color: var(--tertiary-err-color);
+}
+
+.success-message {
+    color: var(--primary-success-color);
+    background-color: var(--secondary-success-color);
+    border-color: var(--tertiary-success-color);
 }

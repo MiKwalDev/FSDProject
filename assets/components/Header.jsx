@@ -42,9 +42,15 @@ const Header = () => {
       ]
 
   const handleLogOut = async (e) => {
-    await logout().unwrap()
-    dispatch(logOut())
+    e.preventDefault()
+
+    try {
+      await logout().unwrap()
+    } catch(err) {
+      console.log(err)
+    }
     setMobileMenuOpen(false)
+    dispatch(logOut())
   }
 
   const toggleDropdown = () =>
@@ -72,7 +78,6 @@ const Header = () => {
       </button>
       <nav className={mobileMenuOpen ? "navbar navbar-show" : "navbar"}>
         <ul className="navbar-list">
-          {/* <input type="search" name="search" id="search" placeholder="Rechercher"/> */}
           {user && (
             <>
               <button

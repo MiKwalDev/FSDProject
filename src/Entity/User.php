@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -26,6 +28,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
+        $this->userGames = new ArrayCollection();
     }
 
     #[ORM\Id]
@@ -74,6 +77,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserGame::class, orphanRemoval: true)]
+    #[ORM\OrderBy(["added_at" => "DESC"])]
+    private Collection $userGames;
 
     public function getId(): ?int
     {
@@ -157,14 +164,44 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCreateAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
     }
 
-    public function setCreateAt(\DateTimeImmutable $created_at): static
+    public function setCreatedAt(\DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserGame>
+     */
+    public function getUserGames(): Collection
+    {
+        return $this->userGames;
+    }
+
+    public function addUserGame(UserGame $userGame): static
+    {
+        if (!$this->userGames->contains($userGame)) {
+            $this->userGames->add($userGame);
+            $userGame->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserGame(UserGame $userGame): static
+    {
+        if ($this->userGames->removeElement($userGame)) {
+            // set the owning side to null (unless already changed)
+            if ($userGame->getUser() === $this) {
+                $userGame->setUser(null);
+            }
+        }
 
         return $this;
     }

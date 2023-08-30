@@ -1,0 +1,79 @@
+.dashboard .search {
+    width: 95%;
+    margin: 0 auto;
+}
+
+.dashboard .search h3 {
+    color: var(--primary-font-color);
+    margin-bottom: 10px;
+}
+
+.dashboard .search .search-form .search-input {
+    outline: none;
+    border: none;
+    height: 40px;
+    border-radius: 5px 0 0 5px;
+    width: 70%;
+    font-family: 'Poppins';
+    font-size: 1rem;
+    padding: 0 0 0 5px;
+    background-color: var(--primary-input-color);
+}
+
+.dashboard .search .search-form .search-btn {
+    all: unset;
+    display: inline-block;
+    outline: none;
+    border-left: 1px solid var(--secondary-bg-color);
+    border-radius: 0 5px 5px 0;
+    height: 40px;
+    width: 40px;
+    background-color: var(--primary-input-color);
+    text-align: center;
+}
+
+.dashboard .search-result .search-result-list {
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard .search-result .search-result-list .game-card {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px auto;
+    border: 2px solid var(--primary-bg-color);
+    border-radius: 7px;
+    background-color: var(--primary-label-color);
+}
+
+.dashboard .search-result .search-result-list .game-card img {
+    border-radius: 5px 0 0 5px;
+    object-fit: cover;
+}
+
+.dashboard .search-result .search-result-list .game-card h4 {
+    font-size: 1rem;
+    margin: 0;
+}
+
+.dashboard .search-result .search-result-list .game-card .game-card-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    color: var(--primary-font-color);
+    padding: 5px;
+    object-fit: cover;
+}
+
+.dashboard .search-result .search-result-list .game-card .game-card-info .btn {
+    border: none;
+    height: 40px;
+    width: 100%;
+    border-radius: 5px;
+    background-color: var(--primary-btn-color);
+    color: var(--primary-font-color);
+    text-align: center;
+    font-weight: bold;
+}

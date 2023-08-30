@@ -62,7 +62,7 @@ const Login = () => {
   const content = isLoading ? (
     <LoadingSpinner/>
   ) : (
-    <section className="login">
+    <section className="container login">
       <div className="title">
         <h1>Connexion</h1>
         <hr />
