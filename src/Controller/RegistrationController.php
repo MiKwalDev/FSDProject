@@ -46,8 +46,7 @@ class RegistrationController extends AbstractController
             return $this->json([
                 "errors" => $errors
             ]);
-        }
-        else {
+        } else {
             $hashedPassword = $passwordHasher->hashPassword(
                 $user,
                 $plaintextPassword

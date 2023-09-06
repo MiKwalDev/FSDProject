@@ -13,9 +13,13 @@ export const userBacklogApiSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: ['User']
     }),
+    getGameInfos: builder.query({
+      query: gameId => `/dashboard/backlog/game/?gameId=${gameId}`
+    })
   })
 })
 
 export const {
-  useAddGameToBacklogMutation
+  useAddGameToBacklogMutation,
+  useGetGameInfosQuery
 } = userBacklogApiSlice

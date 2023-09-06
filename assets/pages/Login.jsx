@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux"
 import { setCredentials } from "../features/auth/authSlice"
 import { useLoginMutation } from "../features/auth/authApiSlice"
 
-import Header from "../components/Header"
 import LoadingSpinner from "../components/LoadingSpinner"
 
 import "../styles/Login.css"
@@ -37,7 +36,7 @@ const Login = () => {
       dispatch(setCredentials({ ...userData, username }))
       setUsername("")
       setPassword("")
-      navigate("/")
+      navigate("/dashboard")
     } catch (err) {
       if (!err?.status) {
         // isLoading: true until timeout occurs
@@ -121,10 +120,7 @@ const Login = () => {
   )
 
   return (
-    <>
-      <Header />
-      {content}
-    </>
+      content
   )
 }
 

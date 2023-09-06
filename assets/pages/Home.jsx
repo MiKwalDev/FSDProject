@@ -3,8 +3,6 @@ import React from "react"
 import { useSelector } from "react-redux/es/hooks/useSelector"
 import { selectCurrentUser } from "../features/auth/authSlice"
 
-import Header from "../components/Header"
-
 import '../styles/Home.css'
 
 const Home = () => {
@@ -21,10 +19,7 @@ const Home = () => {
   )
 
   return (
-    <>
-      <Header/>
-      {content}
-    </>
+      content
   )
 }
 

@@ -1,0 +1,67 @@
+.tracked-challenges .tracked-challenges-list li {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    border: 1px solid var(--primary-bg-color);
+    background-color: var(--primary-label-color);
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.tracked-challenges .tracked-challenges-list li a {
+    display: flex;
+    justify-content: space-between;
+    text-decoration: none;
+    color: var(--secondary-font-color);
+}
+
+.tracked-challenges .tracked-challenges-list li a span {
+    white-space: nowrap;
+}
+
+.tracked-challenges .tracked-challenges-list .tracked-challenge-status {
+    margin: 10px;
+}
+
+.tracked-challenges .tracked-challenges-list .tracked-challenge-status .input-group {
+    display: flex;
+    align-items: center;
+}
+
+.tracked-challenges .tracked-challenges-list .tracked-challenge-buttons .abandon-btn {
+    border: none;
+    height: 30px;
+    border-radius: 5px;
+    background-color: var(--primary-err-color);
+    color: var(--primary-font-color);
+    text-align: center;
+    font-family: "Poppins";
+    font-weight: bold;
+}
+
+.tracked-challenges .tracked-challenges-list .tracked-challenge-buttons .retry-btn {
+    border: none;
+    height: 30px;
+    border-radius: 5px;
+    background-color: var(--primary-success-color);
+    color: var(--primary-font-color);
+    text-align: center;
+    font-family: "Poppins";
+    font-weight: bold;
+}
+
+.tracked-challenges .tracked-challenges-list .tracked-challenge-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tracked-challenges .tracked-challenges-list .tracked-challenge-buttons .delete-btn {
+    border: none;
+    height: 30px;
+    border-radius: 5px;
+    background-color: red;
+    color: var(--primary-font-color);
+    text-align: center;
+    font-weight: bold;
+}

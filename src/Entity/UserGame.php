@@ -24,7 +24,7 @@ class UserGame
     #[Groups(["userGames"])]
     private ?int $game_id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'userGames')]
+    #[ORM\ManyToOne(inversedBy: 'userGames', fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(["userGames"])]
     private ?User $user = null;

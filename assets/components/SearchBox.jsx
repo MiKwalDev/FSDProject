@@ -22,7 +22,7 @@ const SearchBox = () => {
   const userEntry = useSelector(selectUserSearchEntry)
   const dispatch = useDispatch()
 
-  const [triggerSearchGamesByName, { data: games, error: gamesError }] =
+  const [triggerSearchGamesByName, { data: games }] =
     useLazySearchGamesByNameQuery({gameName: userEntry})
 
   const handleSubmit = (e) => {
@@ -51,6 +51,7 @@ const SearchBox = () => {
                 gameId={game.gameid}
                 name={game.game}
                 imgurl={game.imgurl}
+                imgurl2x={game.imgurl2x}
               />
             )
           })}

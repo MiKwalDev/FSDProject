@@ -61,6 +61,7 @@ class DashboardController extends AbstractController
 
                 try {
                     $cover !== null ? $imgUrl = $this->igdbUtils->image_url($cover[0]->image_id, "cover_small") : $imgUrl = "noCover";
+                    $cover !== null ? $imgUrl2x = $this->igdbUtils->image_url($cover[0]->image_id, "cover_small_2x") : $imgUrl = "noCover";
                 } catch (Exception $e) {
                     return $this->json($e->getMessage());
                 }
@@ -68,7 +69,8 @@ class DashboardController extends AbstractController
                 $data[] = [
                     "gameid" => $game->id,
                     "game" => $game->name,
-                    "imgurl" => $imgUrl
+                    "imgurl" => $imgUrl,
+                    "imgurl2x" => $imgUrl2x
                 ];
             }
 

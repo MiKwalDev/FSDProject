@@ -7,6 +7,8 @@ import Home from "./pages/Home"
 import Register from "./pages/Register"
 import Login from "./pages/Login"
 import Dashboard from "./pages/Dashboard"
+import BacklogGame from "./pages/BacklogGame"
+import Challenge from "./pages/Challenge"
 
 import RequireAuth from "./features/auth/RequireAuth"
 import { store } from "./app/store"
@@ -18,11 +20,16 @@ const Main = () => {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+
+            <Route path="challenge/:challengeId" element={<Challenge />} />
 
             <Route element={<RequireAuth />}>
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="dashboard" >
+                <Route index element={<Dashboard />} />
+                <Route path="backlog/game/:gameId" element={<BacklogGame />} />
+              </Route>
             </Route>
           </Route>
         </Routes>

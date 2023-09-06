@@ -1,0 +1,120 @@
+.backlog-game .game-title {
+    margin-bottom: 10px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-top: 70px;
+}
+
+.backlog-game .game-title-wrapper {
+    background-color: rgba(0,0,0,0.8);
+}
+
+.backlog-game .subtitle h2 {
+    font-family: "Poppins";
+    font-weight: bold;
+    margin: 0;
+    white-space: pre-line;
+}
+
+.backlog-game .subtitle hr {
+    margin: 0;
+    padding: 0;
+    width: 10rem;
+    border: 2px solid var(--primary-btn-color);
+    border-radius: 5px;
+}
+
+.backlog-game article {
+    margin: 10px 0;
+}
+
+.backlog-game .tracked-challenges .tracked-challenges-list,
+.backlog-game .creator-challenges .creator-challenges-list {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 0;
+    margin: 1rem auto;
+    width: 95%;
+    justify-content: space-around;
+}
+
+.backlog-game .form {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem auto;
+}
+
+.backlog-game .form .input-group {
+    display: inline-block;
+    border: 1px solid var(--primary-input-color);
+    border-radius: 5px;
+    background-color: var(--primary-input-color);
+    width: 90%;
+    margin: 5px auto;
+    min-height: 40px;
+    padding-left: 5px;
+}
+
+.backlog-game .form .input-group .label {
+    display: block;
+    font-size: 1rem;
+    color: var(--primary-label-color);
+}
+
+.backlog-game .form .input-group input[type="text"] {
+    outline: none;
+    border: none;
+    display: block;
+    line-height: 1.2em;
+    font-size: 14pt;
+    font-weight: bold;
+    color: var(--secondary-bg-color);
+    width: 90%;
+    background-color: var(--primary-input-color);
+}
+
+.backlog-game .form .input-group textarea {
+    display: block;
+    width: 95%;
+    height: 100px;
+    margin: 5px auto;
+    font-size: 14pt;
+    font-weight: bold;
+    color: var(--secondary-bg-color);
+}
+
+.backlog-game .form .input-group .radio-group {
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    margin: 0 auto;
+    padding: 10px 0 10px 0;
+}
+
+.backlog-game .form .input-group .radio-group input[type="radio"] {
+    width: 30px;
+    accent-color: var(--primary-btn-color);
+}
+
+.backlog-game input[type="text"]:focus {
+    height: 40px;
+}
+
+.backlog-game .form .validation {
+    display: flex;
+    justify-content: end;
+    width: 90%;
+    margin: 5px auto;
+}
+
+.backlog-game .form .validation .btn {
+    border: none;
+    height: 40px;
+    border-radius: 5px;
+    background-color: var(--primary-btn-color);
+    color: var(--primary-font-color);
+    text-align: center;
+    font-weight: bold;
+}

@@ -6,7 +6,10 @@ import { logOut, selectCurrentUser } from "../features/auth/authSlice"
 import { useLogoutMutation } from "../features/auth/authApiSlice"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faChevronDown, faChevronRight } from "@fortawesome/free-solid-svg-icons"
+import {
+  faChevronDown,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons"
 import "../styles/Header.css"
 
 const Header = () => {
@@ -46,7 +49,7 @@ const Header = () => {
 
     try {
       await logout().unwrap()
-    } catch(err) {
+    } catch (err) {
       console.log(err)
     }
     setMobileMenuOpen(false)
@@ -59,10 +62,10 @@ const Header = () => {
   useEffect(() => {
     pageLinks.map((page) => {
       if (page.url == location.pathname) {
-        document.title = page.name
+        document.title = `${page.name} | Rule Your Games`
       }
     })
-  }, [])
+  }, [location])
 
   return (
     <header className="header">
@@ -84,11 +87,12 @@ const Header = () => {
                 className="navbar-list-element dropdown-toggle"
                 onClick={toggleDropdown}
               >
-                {user}{"  "}
+                {user}
+                {"  "}
                 {dropdownMenuOpen ? (
-                  <FontAwesomeIcon icon={faChevronDown} size="xs"/>
+                  <FontAwesomeIcon icon={faChevronDown} size="xs" />
                 ) : (
-                  <FontAwesomeIcon icon={faChevronRight} size="xs"/>
+                  <FontAwesomeIcon icon={faChevronRight} size="xs" />
                 )}
               </button>
               <li
@@ -98,7 +102,14 @@ const Header = () => {
                     : "navbar-list-element dropdown"
                 }
               >
-                <Link className={"nav-link"} to={"/dashboard"}>
+                <Link
+                  className={"nav-link"}
+                  to={"/dashboard"}
+                  onClick={() => {
+                    setMobileMenuOpen(false)
+                    setDropdownMenuOpen(false)
+                  }}
+                >
                   Tableau de bord
                 </Link>
               </li>
@@ -107,7 +118,11 @@ const Header = () => {
           {pageLinks.map((page, key) => {
             return (
               <li key={key} className="navbar-list-element">
-                <Link className="nav-link" to={page.url}>
+                <Link
+                  className="nav-link"
+                  to={page.url}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
                   {page.name}
                 </Link>
               </li>

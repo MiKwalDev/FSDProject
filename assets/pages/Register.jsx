@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useRegisterMutation } from "../features/register/registerApiSlice"
 
-import Header from "../components/Header"
-
 import "../styles/Register.css"
 
 const Register = () => {
@@ -145,10 +143,7 @@ const Register = () => {
   )
 
   return (
-    <>
-      <Header />
-      {content}
-    </>
+      content
   )
 }
 

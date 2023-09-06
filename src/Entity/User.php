@@ -5,11 +5,11 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -29,11 +29,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->created_at = new \DateTimeImmutable();
         $this->userGames = new ArrayCollection();
+        $this->created_challenges = new ArrayCollection();
+        $this->trackedChallenges = new ArrayCollection();
     }
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["user"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
@@ -78,9 +81,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserGame::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserGame::class, orphanRemoval: true, fetch: 'EXTRA_LAZY')]
     #[ORM\OrderBy(["added_at" => "DESC"])]
     private Collection $userGames;
+
+    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Challenge::class, fetch: 'EXTRA_LAZY')]
+    #[ORM\OrderBy(["created_at" => "DESC"])]
+    private Collection $created_challenges;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: TrackedChallenge::class, orphanRemoval: true)]
+    #[ORM\OrderBy(["added_at" => "DESC"])]
+    private Collection $trackedChallenges;
 
     public function getId(): ?int
     {
@@ -200,6 +211,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($userGame->getUser() === $this) {
                 $userGame->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Challenge>
+     */
+    public function getCreatedChallenges(): Collection
+    {
+        return $this->created_challenges;
+    }
+
+    public function addCreatedChallenge(Challenge $createdChallenge): static
+    {
+        if (!$this->created_challenges->contains($createdChallenge)) {
+            $this->created_challenges->add($createdChallenge);
+            $createdChallenge->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCreatedChallenge(Challenge $createdChallenge): static
+    {
+        if ($this->created_challenges->removeElement($createdChallenge)) {
+            // set the owning side to null (unless already changed)
+            if ($createdChallenge->getCreator() === $this) {
+                $createdChallenge->setCreator(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TrackedChallenge>
+     */
+    public function getTrackedChallenges(): Collection
+    {
+        return $this->trackedChallenges;
+    }
+
+    public function addTrackedChallenge(TrackedChallenge $trackedChallenge): static
+    {
+        if (!$this->trackedChallenges->contains($trackedChallenge)) {
+            $this->trackedChallenges->add($trackedChallenge);
+            $trackedChallenge->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrackedChallenge(TrackedChallenge $trackedChallenge): static
+    {
+        if ($this->trackedChallenges->removeElement($trackedChallenge)) {
+            // set the owning side to null (unless already changed)
+            if ($trackedChallenge->getUser() === $this) {
+                $trackedChallenge->setUser(null);
             }
         }
 

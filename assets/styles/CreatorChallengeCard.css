@@ -1,0 +1,40 @@
+.creator-challenges .creator-challenges-list li {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    border: 1px solid var(--primary-bg-color);
+    background-color: var(--primary-label-color);
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.creator-challenges .creator-challenges-list li a {
+    display: flex;
+    justify-content: space-between;
+    text-decoration: none;
+    color: var(--secondary-font-color);
+}
+
+.creator-challenges .creator-challenges-list li a span {
+    white-space: nowrap;
+}
+
+.creator-challenges .creator-challenges-list .challenge-status {
+    text-align: end;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.creator-challenges .creator-challenges-list .add-to-tracked-challenges .btn {
+    cursor: pointer;
+    border: none;
+    height: 30px;
+    width: 100%;
+    border-radius: 5px;
+    background-color: var(--primary-btn-color);
+    color: var(--primary-font-color);
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+}
