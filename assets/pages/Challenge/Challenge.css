@@ -1,0 +1,94 @@
+.challenge .challenge-name {
+    margin-bottom: 10px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-top: 70px;
+}
+
+.challenge .challenge-title-wrapper {
+    background-color: rgba(0,0,0,0.8);
+}
+
+.challenge .challenge-infos .subtitle h2 {
+    font-family: "Poppins";
+    font-weight: bold;
+    margin: 0;
+    white-space: pre-line;
+}
+
+.challenge .challenge-infos .subtitle hr {
+    margin: 0;
+    padding: 0;
+    width: 10rem;
+    border: 2px solid var(--primary-btn-color);
+    border-radius: 5px;
+}
+
+.challenge article {
+    margin: 10px 0;
+}
+
+.challenge .creation-infos {
+    display: flex;
+    flex-direction: column;
+    margin: 5px 10px;
+    font-family: 'Roboto';
+    font-size: 0.8rem;
+    color: var(--primary-input-color);
+}
+
+.challenge .creation-infos .challenge-status {
+    margin: 5px 0;
+}
+
+.challenge .rules {
+    margin: 10px 5px;
+}
+
+.challenge .rules h3 {
+    color: var(--primary-font-color);
+}
+
+.challenge .rules hr {
+    margin: 0;
+    padding: 0;
+    width: 6rem;
+    border: 2px solid var(--primary-label-color);
+    border-radius: 5px;
+}
+
+.challenge .rules p {
+    margin: 10px 0;
+    padding: 0 5px;
+    background-color: var(--primary-label-color);
+    border-radius: 5px;
+    text-align: center;
+}
+
+.challenge .moderation {
+    margin-top: 20px;
+    display: flex;
+    gap: 5px;
+    justify-content: space-around;
+}
+
+.challenge .moderation .btn-valid {
+    border: none;
+    height: 40px;
+    border-radius: 5px;
+    background-color: var(--primary-success-color);
+    color: var(--primary-font-color);
+    text-align: center;
+    font-weight: bold;
+}
+
+.challenge .moderation .btn-refuse {
+    border: none;
+    height: 40px;
+    border-radius: 5px;
+    background-color: var(--primary-err-color);
+    color: var(--primary-font-color);
+    text-align: center;
+    font-weight: bold;
+}
