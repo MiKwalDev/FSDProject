@@ -29,6 +29,15 @@ const challengesSlice = createSlice({
         1
       )
     },
+    updateTrackedChallengeStatus: (state, action) => {
+      const challengeId = action.payload.challengeId
+      const field = action.payload.field
+      const challengeToUpdateIndex = state.userTrackedChallenges.findIndex(
+        (challenge) => challenge.id === challengeId
+      )
+      state.userTrackedChallenges[challengeToUpdateIndex][field] =
+        !state.userTrackedChallenges[challengeToUpdateIndex][field]
+    },
   },
 })
 
@@ -38,6 +47,7 @@ export const {
   addNewCreatedChallenge,
   addChallengeToTracked,
   removeChallengeFromTracked,
+  updateTrackedChallengeStatus,
 } = challengesSlice.actions
 
 export default challengesSlice.reducer
@@ -63,5 +73,14 @@ export const selectUserTrackedChallengesByGame = createSelector(
 export const selectUserActivesTrackedChallenges = createSelector(
   [selectUserTrackedChallenges, (state, isDone) => isDone],
   (challenges, isDone) =>
-    challenges.filter((challenge) => challenge.isDone === isDone && challenge.isAbandoned === isDone)
+    challenges.filter(
+      (challenge) =>
+        challenge.isDone === isDone && challenge.isAbandoned === false
+    )
+)
+
+export const selectUserAbandonedTrackedChallenges = createSelector(
+  [selectUserTrackedChallenges, (state, isAbandoned) => isAbandoned],
+  (challenges, isAbandoned) =>
+    challenges.filter((challenge) => challenge.isAbandoned === isAbandoned)
 )

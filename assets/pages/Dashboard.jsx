@@ -1,10 +1,11 @@
-import React, { useEffect } from "react"
-import { Link } from "react-router-dom"
+import React, { useEffect, useRef, useState } from "react"
+import { Link, useSearchParams } from "react-router-dom"
+import { useTitle } from "../hooks/useTitle"
 
 import { useGetCurrentUserDataQuery } from "../features/users/usersApiSlice"
 
 import { useDispatch, useSelector } from "react-redux"
-import { setUserId } from "../features/auth/authSlice"
+import { setUserId, setUserRoles } from "../features/auth/authSlice"
 import { setGames } from "../features/userBacklog/userBacklogSlice"
 import {
   selectUserActivesTrackedChallenges,
@@ -14,17 +15,21 @@ import {
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
+import FormatDate from "../components/FormatDate"
 import LoadingSpinner from "../components/LoadingSpinner"
 import SearchBox from "../components/SearchBox"
 import TrackedChallengeCard from "../components/TrackedChallengeCard"
 import BacklogGameCard from "../components/BacklogGameCard"
 
 import "../styles/Dashboard.css"
-import { useTitle } from "../hooks/useTitle"
 
 const Dashboard = () => {
   useTitle("Tableau de bord")
-  
+
+  const [queryParameters] = useSearchParams()
+  const errRef = useRef()
+  const [errMsg, setErrMsg] = useState(null)
+
   const dispatch = useDispatch()
   const {
     data: userData,
@@ -38,19 +43,23 @@ const Dashboard = () => {
     selectUserActivesTrackedChallenges(state, false)
   )
 
-  const formatDate = (date) => {
-    let dateObj = new Date(date)
-    return dateObj.toLocaleDateString("fr", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    })
-  }
+  useEffect(() => {
+    queryParameters?.get("errmsg") && setErrMsg(queryParameters?.get("errmsg"))
+
+    setTimeout(() => {
+      setErrMsg(null)
+    }, 5000)
+  }, [queryParameters])
 
   useEffect(() => {
-    // console.log(userData)
+    errMsg !== null && errRef.current.focus()
+  }, [errMsg])
+
+  useEffect(() => {
     if (userData) {
+      // console.log(userData.roles)
       dispatch(setUserId(userData.id))
+      dispatch(setUserRoles(userData.roles))
       dispatch(setGames(userData.userGames))
       dispatch(setUserCreatedChallenges(userData.createdChallenges))
       dispatch(setUserTrackedChallenges(userData.trackedChallenges))
@@ -65,6 +74,18 @@ const Dashboard = () => {
       <section className="container dashboard">
         <h1>Tableau de bord</h1>
 
+        {errMsg && (
+          <div className="messagefield">
+            <small
+              className="message err-message"
+              ref={errRef}
+              aria-live="assertive"
+            >
+              {errMsg}
+            </small>
+          </div>
+        )}
+
         <article className="profil">
           <div className="title">
             <h2>Mon profil</h2>
@@ -74,7 +95,9 @@ const Dashboard = () => {
           <div className="profil-card">
             <h3>{userData.username}</h3>
             <span>Email: {userData.userIdentifier}</span>
-            <span>Inscrit depuis le: {formatDate(userData.createdAt)}</span>
+            <span>
+              Inscrit depuis le: <FormatDate date={userData.createdAt} />
+            </span>
             <button className="btn">
               {" "}
               {/* /dashboard/edit-profil */}
@@ -92,9 +115,18 @@ const Dashboard = () => {
             {userActivesTrackedChallenges.map((challenge, index) => {
               if (index >= 5) return
               return (
-                <TrackedChallengeCard key={challenge.id} trackedChallenge={challenge} />
+                <TrackedChallengeCard
+                  key={challenge.id}
+                  trackedChallenge={challenge}
+                />
               )
             })}
+            <Link
+              className="see-more"
+              to={`/dashboard/challenges/${userData.id}`}
+            >
+              Voir plus <FontAwesomeIcon icon={faArrowRight} />
+            </Link>
           </ul>
         </article>
 
@@ -110,20 +142,17 @@ const Dashboard = () => {
             {userData.userGames.map((game, index) => {
               if (index >= 6) return
               return (
-                <Link
+                <BacklogGameCard
                   key={game.id}
-                  to={`/dashboard/backlog/game/${game.gameId}`}
-                  className="wrapper-link"
-                >
-                  <BacklogGameCard
-                    name={game.gameName}
-                    imgurl={game.gameCoverUrl}
-                    addedat={formatDate(game.addedAt)}
-                  />
-                </Link>
+                  backlogGameId={game.id}
+                  name={game.gameName}
+                  imgurl={game.gameCoverUrl}
+                  addedat={<FormatDate date={game.addedAt} />}
+                  linkTo={`/dashboard/backlog/game/${game.gameId}`}
+                />
               )
             })}
-            <Link to={`/dashboard/backlog`}>
+            <Link className="see-more" to={`/dashboard/backlog/${userData.id}`}>
               Voir plus <FontAwesomeIcon icon={faArrowRight} />
             </Link>
           </div>

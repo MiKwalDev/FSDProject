@@ -38,7 +38,7 @@ const CreateChallengeForm = ({ gameId }) => {
           id: result.challengeId,
           name: name,
           rules: rules,
-          status: status,
+          status: status === "public" ? "pending" : status,
           creator: userId,
           gameId: Number(gameId),
           createdAt: result.challengeCreatedAt,

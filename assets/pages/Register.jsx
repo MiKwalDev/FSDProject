@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useRegisterMutation } from "../features/register/registerApiSlice"
 
+import LoadingSpinner from "../components/LoadingSpinner"
+
 import "../styles/Register.css"
 
 const Register = () => {
@@ -56,7 +58,7 @@ const Register = () => {
   const hideLabel = (e) => document.getElementById(`${e.target.id}-label`).classList.toggle("hidden")
 
   const content = isLoading ? (
-    <h1>Loading...</h1>
+    <LoadingSpinner />
   ) : (
     <section className="container register">
       <div className="title">

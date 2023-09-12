@@ -5,7 +5,7 @@ import '../styles/ConfirmDial.css'
 const ConfimDial = ({ isOpen, subject, validationFunc, cancelFunc }) => {
 
   const content = (
-    <div className={isOpen ? "dial" : ""}>
+    <div className={isOpen ? "dial" : "nodial"}>
       <div className={isOpen ? "confirm-dial confirm-dial-show" : "confirm-dial"}>
         <div className="subtitle">
           <h4>Confirmation</h4>

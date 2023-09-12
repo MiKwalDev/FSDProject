@@ -1,0 +1,29 @@
+.backlog {
+    padding-top: 5px;
+}
+
+.backlog .backlog-management .title {
+    margin-bottom: 10px;
+}
+
+.backlog .backlog-management .title h2 {
+    font-family: "Poppins";
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.backlog .backlog-management .title hr {
+    margin: 0;
+    padding: 0;
+    width: 10rem;
+    border: 2px solid var(--primary-btn-color);
+    border-radius: 5px;
+}
+
+.backlog .backlog-management .games-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 95%;
+    margin: 20px auto;
+}

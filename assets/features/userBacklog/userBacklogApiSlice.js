@@ -15,11 +15,23 @@ export const userBacklogApiSlice = apiSlice.injectEndpoints({
     }),
     getGameInfos: builder.query({
       query: gameId => `/dashboard/backlog/game/?gameId=${gameId}`
-    })
+    }),
+    removeFromBacklog: builder.mutation({
+      query: (arg) => {
+        const { backlogGameId } = arg
+        return {
+          url: '/dashboard/backlog/delete',
+          method: 'DELETE',
+          params: { backlogGameId }
+        }
+      },
+      invalidatesTags: ['User']
+    }),
   })
 })
 
 export const {
   useAddGameToBacklogMutation,
-  useGetGameInfosQuery
+  useGetGameInfosQuery,
+  useRemoveFromBacklogMutation
 } = userBacklogApiSlice

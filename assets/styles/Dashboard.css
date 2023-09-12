@@ -69,3 +69,12 @@
     width: 95%;
     margin: 20px auto;
 }
+
+.dashboard .user-backlog .see-more,
+.dashboard .tracked-challenges .see-more {
+    width: 95%;
+    margin: 5px auto;
+    text-align: end;
+    text-decoration: none;
+    color: var(--primary-font-color);
+}

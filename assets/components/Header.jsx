@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 
 import { useDispatch, useSelector } from "react-redux"
-import { logOut, selectCurrentUser } from "../features/auth/authSlice"
+import {
+  logOut,
+  selectCurrentUser,
+  selectCurrentUserRoles,
+} from "../features/auth/authSlice"
 import { useLogoutMutation } from "../features/auth/authApiSlice"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -18,6 +22,7 @@ const Header = () => {
   const [dropdownMenuOpen, setDropdownMenuOpen] = useState(false)
 
   const user = useSelector(selectCurrentUser)
+  const userRoles = useSelector(selectCurrentUserRoles)
 
   const [logout, { isLoading }] = useLogoutMutation()
   const dispatch = useDispatch()
@@ -113,6 +118,26 @@ const Header = () => {
                   Tableau de bord
                 </Link>
               </li>
+              {userRoles?.includes("ROLE_ADMIN") && (
+                <li
+                  className={
+                    dropdownMenuOpen
+                      ? "navbar-list-element dropdown dropdown-show"
+                      : "navbar-list-element dropdown"
+                  }
+                >
+                  <Link
+                    className={"nav-link"}
+                    to={"/admin"}
+                    onClick={() => {
+                      setMobileMenuOpen(false)
+                      setDropdownMenuOpen(false)
+                    }}
+                  >
+                    Tableau d'administration
+                  </Link>
+                </li>
+              )}
             </>
           )}
           {pageLinks.map((page, key) => {

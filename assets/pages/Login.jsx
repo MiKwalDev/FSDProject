@@ -48,7 +48,7 @@ const Login = () => {
       } else {
         setErrMsg("Connexion échouée")
       }
-      errRef.current.focus()
+      errMsg !== "" && errRef.current.focus()
     }
   }
 

@@ -8,7 +8,7 @@ import {
   useToggleIsAbandonedMutation,
   useToggleIsDoneMutation,
 } from "../features/challenges/challengesApiSlice"
-import { removeChallengeFromTracked } from "../features/challenges/challengesSlice"
+import { removeChallengeFromTracked, updateTrackedChallengeStatus } from "../features/challenges/challengesSlice"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
@@ -66,6 +66,10 @@ const TrackedChallengeCard = ({ trackedChallenge }) => {
         }, 5000)
       } else if (toggleIsDoneResult.success) {
         setIsChecked(!isChecked)
+        dispatch(updateTrackedChallengeStatus({
+          challengeId: Number(trackedChallenge.id),
+          field: "isDone"
+        }))
       }
     }
   }
@@ -106,6 +110,10 @@ const TrackedChallengeCard = ({ trackedChallenge }) => {
         }, 5000)
       } else if (toggleIsAbandonedResult.success) {
         setIsAbandoned(!isAbandoned)
+        dispatch(updateTrackedChallengeStatus({
+          challengeId: Number(trackedChallenge.id),
+          field: "isAbandoned"
+        }))
       }
     }
   }

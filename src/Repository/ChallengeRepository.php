@@ -34,6 +34,14 @@ class ChallengeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findOnPending()
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere("c.status = 'pending'")
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Challenge[] Returns an array of Challenge objects
 //     */

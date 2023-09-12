@@ -118,6 +118,10 @@ h3 {
     color: green;
 }
 
+.pending {
+    color: yellow;
+}
+
 .custom-checkbox input[type="checkbox"] {
     -webkit-appearance: none;
     appearance: none;
@@ -150,3 +154,9 @@ input.checked::before {
     background-color: var(--primary-label-color);
 }
 
+.no-data {
+    text-align: center;
+    font-family: 'Roboto';
+    font-size: 1rem;
+    color: var(--primary-font-color);
+}

@@ -3,11 +3,12 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
   userId: null,
   username: null,
+  userRoles: null,
   token: null,
 }
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     setCredentials: (state, action) => {
@@ -18,17 +19,26 @@ const authSlice = createSlice({
     setUserId: (state, action) => {
       state.userId = action.payload
     },
-    logOut: (state) => {
-      state.username = null,
-      state.token = null
-    }
-  }
+    setUserRoles: (state, action) => {
+      state.userRoles = action.payload
+    },
+    logOut: (state, action) => {
+      state = {
+        userId: null,
+        username: null,
+        userRoles: null,
+        token: null,
+      }
+    },
+  },
 })
 
-export const { setCredentials, setUserId, logOut } = authSlice.actions
+export const { setCredentials, setUserId, setUserRoles, logOut } =
+  authSlice.actions
 
 export default authSlice.reducer
 
 export const selectCurrentUserId = (state) => state.auth.userId
 export const selectCurrentUser = (state) => state.auth.username
+export const selectCurrentUserRoles = (state) => state.auth.userRoles
 export const selectCurrentToken = (state) => state.auth.token

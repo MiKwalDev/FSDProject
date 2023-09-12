@@ -22,11 +22,13 @@ class BacklogController extends AbstractController
     private $igdbUtils;
     private $igdb;
     private $entityManager;
+    private $userGameRepo;
 
-    public function __construct(IGDBUtils $igdbUtils, EntityManagerInterface $entityManager)
+    public function __construct(IGDBUtils $igdbUtils, EntityManagerInterface $entityManager, UserGameRepository $userGameRepo)
     {
         $this->igdbUtils = $igdbUtils;
         $this->entityManager = $entityManager;
+        $this->userGameRepo = $userGameRepo;
 
         try {
             $token = $this->igdbUtils->authenticate($_ENV['CLIENT_ID'], $_ENV['CLIENT_SECRET'])->access_token;
@@ -83,6 +85,30 @@ class BacklogController extends AbstractController
             }]);
         } catch (IGDBEndpointException $e) {
             return $this->json($e->getMessage());
+        }
+    }
+
+    #[Route('/dashboard/backlog/delete', name: 'dashboard_backlog_delete', methods: ['DELETE'])]
+    public function delete(Request $request) : Response
+    {
+        $user = $this->getUser();
+
+        if ($user) {
+            $queryData = $request->query;
+
+            $userGame = $this->userGameRepo->find($queryData->get("backlogGameId"));
+
+            if ($userGame) {
+
+                $this->entityManager->remove($userGame);
+                $this->entityManager->flush();
+
+                return $this->json(["success" => "Retrait efféctuée"]);
+            }else {
+                return $this->json(["error" => "Jeu non trouvé"]);
+            }
+        } else {
+            return $this->json("Aucun utilisateur trouvé! Vous devez être connecté pour cette fonctionnalité.");
         }
     }
 }

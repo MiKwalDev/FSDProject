@@ -55,7 +55,7 @@ const CreatorChallengeCard = ({ creatorChallenge }) => {
 
   const content = (
     <li>
-      <Link to={`/dashboard/challenge/${creatorChallenge.id}`}>
+      <Link to={`/challenge/${creatorChallenge.id}`}>
         <h3>{creatorChallenge.name}</h3>
         <span>
           Voir les règles <FontAwesomeIcon icon={faArrowRight} />
@@ -64,11 +64,11 @@ const CreatorChallengeCard = ({ creatorChallenge }) => {
       <span className="challenge-status">
         <FontAwesomeIcon
           icon={faCircle}
-          className={
-            creatorChallenge.status === "private" ? "circle private" : "circle public"
-          }
+          className={"circle " + creatorChallenge.status}
         />
-        {creatorChallenge.status === "private" ? " Privé" : " Publique"}
+        {creatorChallenge.status === "private" && " Privé"}
+        {creatorChallenge.status === "public" && " Publique"}
+        {creatorChallenge.status === "pending" && " En attente validation"}
       </span>
       <div className="add-to-tracked-challenges">
         {msg.length !== 0 ? (
