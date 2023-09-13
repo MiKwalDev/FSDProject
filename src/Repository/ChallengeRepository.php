@@ -42,6 +42,28 @@ class ChallengeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findGamesWithMostChallenges()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.game_id')
+            ->addSelect('COUNT(c.id) as challenges')
+            ->groupBy('c.game_id')
+            ->orderBy('challenges', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findLastCreated(int $number)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere("c.status = 'public'")
+            ->orderBy('c.created_at', 'DESC')
+            ->setMaxResults($number)
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Challenge[] Returns an array of Challenge objects
 //     */

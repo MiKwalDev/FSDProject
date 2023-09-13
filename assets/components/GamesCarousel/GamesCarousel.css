@@ -1,0 +1,20 @@
+.glide {
+    margin-top: 10px;
+    margin-left: 5px;
+}
+
+.glide .glide__arrow {
+    border: none;
+}
+
+.glide .glide__arrow svg {
+    font-size: 1.5rem;
+}
+
+.glide .glide__arrow--left {
+    left: 0;
+}
+
+.glide .glide__arrow--right {
+    right: 0;
+}
