@@ -6,7 +6,7 @@ const baseQuery = fetchBaseQuery({
   credentials: "include",
   prepareHeaders: (headers, { getState, endpoint }) => {
     const token = getState().auth.token
-    // console.log(endpoint)
+    console.log(endpoint)
     if (endpoint === "refresh") {
       return headers
     } else if (token) {
@@ -43,6 +43,6 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["User", "Admin", "Challenge"],
+  tagTypes: ["User", "Admin", "Challenge", "HomeData"],
   endpoints: (builder) => ({}),
 })

@@ -6,6 +6,7 @@ import { useRemoveFromBacklogMutation } from "../../features/userBacklog/userBac
 import { removeGameFromBacklog } from "../../features/userBacklog/userBacklogSlice"
 
 import ConfimDial from "../ConfirmDial/ConfimDial"
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner"
 
 import "./BacklogGameCard.css"
 
@@ -15,7 +16,8 @@ const BacklogGameCard = ({ backlogGameId, name, imgurl, addedat, linkTo }) => {
   const [deleteConfirmDial, setDeleteConfirmDial] = useState({
     show: false,
   })
-  const [removeFromBacklog] = useRemoveFromBacklogMutation(backlogGameId)
+  const [removeFromBacklog, { isLoading }] =
+    useRemoveFromBacklogMutation(backlogGameId)
 
   const dispatch = useDispatch()
 
@@ -63,35 +65,46 @@ const BacklogGameCard = ({ backlogGameId, name, imgurl, addedat, linkTo }) => {
     msg !== "" && msgRef.current.focus()
   }, [msg])
 
-  return (
-    <div className="backlog-game-card">
-      <ConfimDial
-        isOpen={deleteConfirmDial.show}
-        subject={"suppression"}
-        validationFunc={handleDeleteConfirmValidation}
-        cancelFunc={handleDeleteConfirmCancel}
-      />
-      <img src={imgurl !== "noCover" ? imgurl : NoVisualCover} alt="cover" />
-      <button className="btn btn-remove" onClick={handleDeleteBtn}>
-        Retirer
-      </button>
-      <Link to={linkTo} className="backlog-game-card-info wrapper-link">
-        <h4>{name}</h4>
-        <span>Ajouté le: {addedat}</span>
-      </Link>
-      {msg !== "" && (
-        <div className="messagefield">
-          <small
-            className={"message err-message"}
-            ref={msgRef}
-            aria-live="assertive"
-          >
-            {msg}
-          </small>
-        </div>
-      )}
-    </div>
-  )
+  let content
+  if (isLoading) {
+    content = (
+      <div className="backlog-game-card">
+        <LoadingSpinner />
+      </div>
+    )
+  } else {
+    content = (
+      <div className="backlog-game-card">
+        <ConfimDial
+          isOpen={deleteConfirmDial.show}
+          subject={"suppression"}
+          validationFunc={handleDeleteConfirmValidation}
+          cancelFunc={handleDeleteConfirmCancel}
+        />
+        <img src={imgurl !== "noCover" ? imgurl : NoVisualCover} alt="cover" />
+        <button className="btn btn-remove" onClick={handleDeleteBtn}>
+          Retirer
+        </button>
+        <Link to={linkTo} className="backlog-game-card-info wrapper-link">
+          <h4>{name}</h4>
+          <span>Ajouté le: {addedat}</span>
+        </Link>
+        {msg !== "" && (
+          <div className="messagefield">
+            <small
+              className={"message err-message"}
+              ref={msgRef}
+              aria-live="assertive"
+            >
+              {msg}
+            </small>
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  return content
 }
 
 export default BacklogGameCard

@@ -2,8 +2,10 @@ import React, { useState, useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { useDispatch } from "react-redux"
-import { setCredentials } from "../../features/auth/authSlice"
 import { useLoginMutation } from "../../features/auth/authApiSlice"
+import { setCredentials } from "../../features/auth/authSlice"
+import { setGames } from "../../features/userBacklog/userBacklogSlice"
+import { setUserCreatedChallenges, setUserTrackedChallenges } from "../../features/challenges/challengesSlice"
 
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner"
 
@@ -33,7 +35,10 @@ const Login = () => {
 
     try {
       const userData = await login({ username, password }).unwrap()
-      dispatch(setCredentials({ ...userData, username }))
+      dispatch(setCredentials({ ...userData }))
+      dispatch(setGames(userData.data.games))
+      dispatch(setUserCreatedChallenges(userData.data.createdChallenges))
+      dispatch(setUserTrackedChallenges(userData.data.trackedChallenges))
       setUsername("")
       setPassword("")
       navigate("/dashboard")

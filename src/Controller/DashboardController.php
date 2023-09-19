@@ -5,12 +5,14 @@ namespace App\Controller;
 use App\IGDBWrapper\IGDB;
 use App\IGDBWrapper\IGDBEndpointException;
 use App\IGDBWrapper\IGDBUtils;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/api', name: 'api_')]
 class DashboardController extends AbstractController
@@ -31,23 +33,62 @@ class DashboardController extends AbstractController
         $this->igdb = new IGDB($_ENV['CLIENT_ID'], $token);
     }
 
-    #[Route('/dashboard', name: 'dashboard', methods: ['POST'])]
-    public function index(): Response
+    #[Route('/dashboard/getuserdata', name: 'dashboard_getuserdata', methods: ['POST'])]
+    public function getUserData(): JsonResponse
     {
         $user = $this->getUser();
 
         if ($user) {
+            return $this->json($user, 200, [], ["groups" => ["user"]]);
+        } else {
+            return $this->json("Aucun utilisateur");
+        }
+    }
 
-            return $this->json($user, Response::HTTP_OK, [], [ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($obj) {
-                return $obj->getId();
-            }]);
+    #[Route('/dashboard/profil/update', name: 'dashboard_profil_update', methods: ['UPDATE'])]
+    public function updateProfil(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepo, ValidatorInterface $validator): JsonResponse
+    {
+        $user = $this->getUser();
+        $user = $userRepo->findOneBy(["email" => $user->getUserIdentifier()]);
+
+        if ($user) {
+            $queryData = $request->query;
+
+            $user->setUsername($queryData->get("username"));
+            $user->setEmail($queryData->get("email"));
+
+            $violations = $validator->validate($user);
+            if (count($violations) > 0) {
+                foreach ($violations as $error) {
+                    $errors[] = $error;
+                }
+                return $this->json([
+                    "error" => $errors[0]->getMessage()
+                ]);
+            } else {
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                return $this->json([
+                    "success" => [
+                        "newCredentials" => [
+                            'userId' => $user->getId(),
+                            'username' => $user->getUsername(),
+                            'userEmail' => $user->getEmail(),
+                            'userCreatedAt' => $user->getCreatedAt(),
+                            'roles' => $user->getRoles(),
+                        ],
+                        "message" => "Modifications effectuées avec succès"
+                    ]
+                ]);
+            }
         } else {
             return $this->json("Aucun utilisateur");
         }
     }
 
     #[Route('/dashboard/searchgames', name: 'dashboard_searchgames', methods: ['POST'])]
-    public function searchGames(Request $request): Response
+    public function searchGames(Request $request): JsonResponse
     {
         $query = $request->query;
         $gameName = $query->get("gameName");

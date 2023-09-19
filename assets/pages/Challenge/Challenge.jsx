@@ -81,7 +81,7 @@ const Challenge = () => {
   let content
   if (isLoading) {
     content = <LoadingSpinner />
-  } else if (isSuccess && challengeData == "Page inaccessible") {
+  } else if (isSuccess && challengeData === "Page inaccessible") {
     content = (
       <section className="container challenge">
         <div className="messagefield">
@@ -102,7 +102,7 @@ const Challenge = () => {
         </div>
 
         <article className="challenge-infos">
-          <div className="subtitle">
+          <div className="title">
             <h2>Jeu: {challengeData.gameName}</h2>
             <hr />
           </div>
@@ -110,7 +110,7 @@ const Challenge = () => {
           <div className="creation-infos">
             <span>
               Créé par {challengeData.challenge.creator.username} le{" "}
-              {formatDate(challengeData.challenge.createdAt)}
+              {formatDate(challengeData.challenge.created_at)}
             </span>
 
             <span className="challenge-status">

@@ -7,9 +7,8 @@ use App\IGDBWrapper\IGDBUtils;
 use App\Repository\ChallengeRepository;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 #[Route('/api', name: 'api_')]
 class HomeController extends AbstractController
@@ -31,7 +30,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/home/homedata', name: 'home_homedata', methods: ['GET'])]
-    public function getHomeData(ChallengeRepository $challengeRepo): Response
+    public function getHomeData(ChallengeRepository $challengeRepo): JsonResponse
     {
         $lastChallengesCreated = $challengeRepo->findLastCreated(3);
         $popularGamesIdAndChallengesCount = $challengeRepo->findGamesWithMostChallenges();
@@ -69,8 +68,6 @@ class HomeController extends AbstractController
         return $this->json([
             "popularGames" => $popularGames,
             "lastChallengesCreated" => $lastChallengesToDisplay
-        ], Response::HTTP_OK, [], [ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($obj) {
-            return $obj->getId();
-        }]);
+        ]);
     }
 }

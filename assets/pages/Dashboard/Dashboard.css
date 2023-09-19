@@ -6,20 +6,6 @@
     margin-bottom: 10px;
 }
 
-.dashboard .title h2 {
-    font-family: "Poppins";
-    font-weight: bold;
-    margin-bottom: 0;
-}
-
-.dashboard .title hr {
-    margin: 0;
-    padding: 0;
-    width: 10rem;
-    border: 2px solid var(--primary-btn-color);
-    border-radius: 5px;
-}
-
 .dashboard .profil .profil-card {
     display: flex;
     flex-direction: column;
@@ -41,14 +27,15 @@
 }
 
 .dashboard .profil .profil-card .btn {
-    cursor: pointer;
-    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
     height: 40px;
     margin-top: 5px;
     border-radius: 5px;
     background-color: var(--primary-btn-color);
     color: var(--primary-font-color);
-    text-align: center;
     font-weight: bold;
 }
 

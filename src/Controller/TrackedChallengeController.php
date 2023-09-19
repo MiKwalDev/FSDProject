@@ -5,8 +5,8 @@ namespace App\Controller;
 use App\Repository\TrackedChallengeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/api', name: 'api_')]
@@ -22,7 +22,7 @@ class TrackedChallengeController extends AbstractController
     }
     
     #[Route('/dashboard/trackedchallenge/toggleisdone', name: 'dashboard_trackedchallenge_toggleisdone', methods: ['POST'])]
-    public function toggleIsDone(Request $request) : Response
+    public function toggleIsDone(Request $request) : JsonResponse
     {
         $user = $this->getUser();
 
@@ -47,7 +47,7 @@ class TrackedChallengeController extends AbstractController
     }
 
     #[Route('/dashboard/trackedchallenge/toggleisabandoned', name: 'dashboard_trackedchallenge_toggleisabandoned', methods: ['POST'])]
-    public function toggleIsAbandoned(Request $request) : Response
+    public function toggleIsAbandoned(Request $request) : JsonResponse
     {
         $user = $this->getUser();
 
@@ -72,7 +72,7 @@ class TrackedChallengeController extends AbstractController
     }
 
     #[Route('/dashboard/trackedchallenge/delete', name: 'dashboard_trackedchallenge_delete', methods: ['DELETE'])]
-    public function delete(Request $request) : Response
+    public function delete(Request $request) : JsonResponse
     {
         $user = $this->getUser();
 

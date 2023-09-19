@@ -1,0 +1,19 @@
+.game .game-title {
+    margin-bottom: 10px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-top: 70px;
+}
+
+.game .game-title-wrapper {
+    background-color: rgba(0,0,0,0.8);
+}
+
+.game .last-challenges .last-challenges-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-left: 5px;
+    margin-top: 10px;
+}

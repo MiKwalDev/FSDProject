@@ -13,7 +13,7 @@ const Register = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [passwordConfirm, setPasswordConfirm] = useState("")
-  const [errMsg, setErrMsg] = useState([])
+  const [errMsg, setErrMsg] = useState(null)
   const navigate = useNavigate()
 
   const [register, { isLoading }] = useRegisterMutation()
@@ -23,7 +23,7 @@ const Register = () => {
   }, [])
 
   useEffect(() => {
-    setErrMsg([])
+    setErrMsg(null)
   }, [username, email, password, passwordConfirm])
 
   const handleSubmit = async (e) => {
@@ -37,7 +37,7 @@ const Register = () => {
     }).unwrap()
 
     if (registerData.errors) {
-      setErrMsg(registerData.errors)
+      setErrMsg(registerData.error)
     } else if (registerData.success) {
       setUsername("")
       setEmail("")
@@ -66,14 +66,14 @@ const Register = () => {
         <hr />
       </div>
 
-      {errMsg.length > 0 && (
+      {errMsg !== null && (
         <div className="messagefield">
           <small
             className="message err-message"
             ref={errRef}
             aria-live="assertive"
           >
-            {errMsg[0].message}
+            {errMsg}
           </small>
         </div>
       )}

@@ -32,7 +32,7 @@ const Backlog = () => {
                 backlogGameId={game.id}
                 name={game.gameName}
                 imgurl={game.gameCoverUrl}
-                addedat={formatDate(game.addedAt)}
+                addedat={formatDate(game.addedAt.date)}
                 linkTo={`/dashboard/backlog/game/${game.gameId}`}
               />
             )

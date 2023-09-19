@@ -22,6 +22,17 @@ class ChallengeRepository extends ServiceEntityRepository
         parent::__construct($registry, Challenge::class);
     }
 
+    public function findAllByUser(User $user)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.creator = :user')
+            ->setParameter(':user', $user)
+            ->orderBy('c.created_at', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function findCreatedByUserAndGame(User $user, int $gameId)
     {
         return $this->createQueryBuilder('c')
@@ -46,6 +57,7 @@ class ChallengeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->select('c.game_id')
+            ->andWhere("c.status = 'public'")
             ->addSelect('COUNT(c.id) as challenges')
             ->groupBy('c.game_id')
             ->orderBy('challenges', 'DESC')
@@ -58,6 +70,18 @@ class ChallengeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->andWhere("c.status = 'public'")
+            ->orderBy('c.created_at', 'DESC')
+            ->setMaxResults($number)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findLastCreatedByGameId(int $number, int $gameId)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere("c.status = 'public'")
+            ->andWhere("c.game_id = :gameId")
+            ->setParameter(":gameId", $gameId)
             ->orderBy('c.created_at', 'DESC')
             ->setMaxResults($number)
             ->getQuery()

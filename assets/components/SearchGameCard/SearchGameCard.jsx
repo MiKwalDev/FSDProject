@@ -4,6 +4,8 @@ import { useAddGameToBacklogMutation } from "../../features/userBacklog/userBack
 
 import NoVisualCover from "../../styles/images/no_visual.png"
 
+import "./SearchGameCard.css"
+
 const SearchGameCard = ({ gameId, name, imgurl, imgurl2x }) => {
   const msgRef = useRef()
   const [msg, setMsg] = useState([])
@@ -28,9 +30,9 @@ const SearchGameCard = ({ gameId, name, imgurl, imgurl2x }) => {
   }, [msg])
 
   return (
-    <li className="game-card">
+    <li className="search-game-card">
       <img src={imgurl !== "noCover" ? imgurl : NoVisualCover} alt="cover" />
-      <div className="game-card-info">
+      <div className="search-game-card-info">
         <h4>{name}</h4>
         {msg.length !== 0 ? (
           <div className="search-result messagefield">

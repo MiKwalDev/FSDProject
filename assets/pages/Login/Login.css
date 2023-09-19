@@ -6,20 +6,6 @@
     margin-bottom: 10px;
 }
 
-.login .title h1 {
-    font-family: "Poppins";
-    font-weight: bold;
-    margin-bottom: 0;
-}
-
-.login .title hr {
-    margin: 0;
-    padding: 0;
-    width: 10rem;
-    border: 2px solid var(--primary-btn-color);
-    border-radius: 5px;
-}
-
 .login .form {
     display: flex;
     flex-direction: column;

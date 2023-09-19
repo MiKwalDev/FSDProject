@@ -28,7 +28,7 @@ class Challenge
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Veuillez entrer un nom")]
     #[Assert\Regex(
-        pattern: "/[^ \w\d%]+/",
+        pattern: "/[^ A-zÀ-ú\d%]+/",
         match: false,
         message: "Le nom ne peut pas contenir de caractère spécial",
     )]
@@ -165,5 +165,17 @@ class Challenge
         }
 
         return $this;
+    }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->name,
+            'rules' => $this->rules,
+            'status' => $this->status,
+            'creatorId' => $this->creator->getId(),
+            'gameId' => $this->game_id
+        ];
     }
 }

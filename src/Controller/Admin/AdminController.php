@@ -3,12 +3,12 @@
 namespace App\Controller\Admin;
 
 use App\Repository\ChallengeRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 #[Route('/api', name: 'api_')]
 class AdminController extends AbstractController
@@ -23,23 +23,23 @@ class AdminController extends AbstractController
     }
 
     #[Route('/admin', name: 'admin', methods: ['POST'])]
-    public function index(): Response
+    public function index(): JsonResponse
     {
         if ($this->isGranted("ROLE_ADMIN")) {
             $onPendingChallenges = $this->challengeRepo->findOnPending();
 
             return $this->json([
                 "onPendingChallenges" => $onPendingChallenges
-            ], Response::HTTP_OK, [], [ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($obj) {
-                return $obj->getId();
-            }]);
+            ], 200, [], ["groups" => ["created_challenges"]]);
+        } else {
+            return $this->json([
+                "error" => "Non autorisé"
+            ]);
         }
-
-        return $this->json("test");
     }
 
     #[Route('/admin/challenge/publish', name: 'admin_challenge_publish', methods: ['POST'])]
-    public function publish(Request $request): Response
+    public function publish(Request $request): JsonResponse
     {
         if ($this->isGranted("ROLE_ADMIN")) {
             $queryData = $request->query;
@@ -62,6 +62,26 @@ class AdminController extends AbstractController
                     "error" => "Challenge introuvable"
                 ]);
             }
+        } else {
+            return $this->json([
+                "error" => "Non autorisé"
+            ]);
+        }
+    }
+
+    #[Route('/admin/userslist', name: 'admin_userslist', methods: ['GET'])]
+    public function getUsersList(UserRepository $userRepo): JsonResponse
+    {
+        if ($this->isGranted("ROLE_ADMIN")) {
+            $usersList = $userRepo->findAll();
+
+            return $this->json([
+                "users" => $usersList
+            ], 200, [], ["groups" => ["user"]]);
+        } else {
+            return $this->json([
+                "error" => "Non autorisé"
+            ]);
         }
     }
 }

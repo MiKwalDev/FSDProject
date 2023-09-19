@@ -26,7 +26,6 @@ class UserGame
 
     #[ORM\ManyToOne(inversedBy: 'userGames', fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(["userGames"])]
     private ?User $user = null;
 
     #[ORM\Column]
@@ -34,6 +33,7 @@ class UserGame
     private ?\DateTimeImmutable $added_at = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["userGames"])]
     private ?string $game_name = null;
 
     #[ORM\Column(nullable: false)]
@@ -103,5 +103,17 @@ class UserGame
         $this->game_cover_url = $game_cover_url;
 
         return $this;
+    }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'gameId' => $this->game_id,
+            'gameName' => $this->game_name,
+            'gameCoverUrl' => $this->game_cover_url,
+            'user' => $this->user->getId(),
+            'addedAt' => $this->added_at
+        ];
     }
 }

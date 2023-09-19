@@ -11,7 +11,7 @@ const ConfimDial = ({ isOpen, subject, validationFunc, cancelFunc }) => {
           <h4>Confirmation</h4>
           <span>{subject}</span>
         </div>
-        <p>Es tu sûr(e) de vouloir de vouloir continuer ?</p>
+        <p>Es tu sûr(e) de vouloir continuer ?</p>
 
         <div className="validation-field">
           <button className="btn btn-confirm" onClick={validationFunc} >Valider</button>

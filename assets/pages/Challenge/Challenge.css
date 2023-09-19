@@ -10,21 +10,6 @@
     background-color: rgba(0,0,0,0.8);
 }
 
-.challenge .challenge-infos .subtitle h2 {
-    font-family: "Poppins";
-    font-weight: bold;
-    margin: 0;
-    white-space: pre-line;
-}
-
-.challenge .challenge-infos .subtitle hr {
-    margin: 0;
-    padding: 0;
-    width: 10rem;
-    border: 2px solid var(--primary-btn-color);
-    border-radius: 5px;
-}
-
 .challenge article {
     margin: 10px 0;
 }

@@ -42,6 +42,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\NotBlank(message: "Veuillez entrer un email")]
     #[Assert\Email(message: "Veuillez entrer un email valide")]
+    #[Groups(["user"])]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -76,6 +77,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         match: false,
         message: "Votre nom d'utilisateur ne peut contenir aucun espace ou caractère spécial",
     )]
+    #[Groups(["created_challenges", "user"])]
     private ?string $username = null;
 
     #[ORM\Column]

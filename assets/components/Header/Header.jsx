@@ -7,7 +7,7 @@ import {
   selectCurrentUser,
   selectCurrentUserRoles,
 } from "../../features/auth/authSlice"
-import { useLogoutMutation } from "../../features/auth/authApiSlice"
+import { useLazyLogoutQuery } from "../../features/auth/authApiSlice"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
@@ -24,7 +24,7 @@ const Header = () => {
   const user = useSelector(selectCurrentUser)
   const userRoles = useSelector(selectCurrentUserRoles)
 
-  const [logout, { isLoading }] = useLogoutMutation()
+  const [triggerLogout] = useLazyLogoutQuery()
   const dispatch = useDispatch()
 
   const pageLinks = user
@@ -49,14 +49,11 @@ const Header = () => {
         },
       ]
 
-  const handleLogOut = async (e) => {
+  const handleLogOut = (e) => {
     e.preventDefault()
 
-    try {
-      await logout().unwrap()
-    } catch (err) {
-      console.log(err)
-    }
+    triggerLogout()
+
     setMobileMenuOpen(false)
     dispatch(logOut())
   }
@@ -89,7 +86,7 @@ const Header = () => {
           {user && (
             <>
               <button
-                className="navbar-list-element dropdown-toggle"
+                className="navbar-list-element dropdown-toggle connect-btn"
                 onClick={toggleDropdown}
               >
                 {user}
@@ -100,49 +97,52 @@ const Header = () => {
                   <FontAwesomeIcon icon={faChevronRight} size="xs" />
                 )}
               </button>
-              <li
+              <div
                 className={
                   dropdownMenuOpen
                     ? "navbar-list-element dropdown dropdown-show"
                     : "navbar-list-element dropdown"
                 }
               >
-                <Link
-                  className={"nav-link"}
-                  to={"/dashboard"}
-                  onClick={() => {
-                    setMobileMenuOpen(false)
-                    setDropdownMenuOpen(false)
-                  }}
-                >
-                  Tableau de bord
-                </Link>
-              </li>
-              {userRoles?.includes("ROLE_ADMIN") && (
-                <li
-                  className={
-                    dropdownMenuOpen
-                      ? "navbar-list-element dropdown dropdown-show"
-                      : "navbar-list-element dropdown"
-                  }
-                >
+                <li>
                   <Link
                     className={"nav-link"}
-                    to={"/admin"}
+                    to={"/dashboard"}
                     onClick={() => {
                       setMobileMenuOpen(false)
                       setDropdownMenuOpen(false)
                     }}
                   >
-                    Tableau d'administration
+                    Tableau de bord
                   </Link>
                 </li>
-              )}
+                {userRoles?.includes("ROLE_ADMIN") && (
+                  <li>
+                    <Link
+                      className={"nav-link"}
+                      to={"/admin"}
+                      onClick={() => {
+                        setMobileMenuOpen(false)
+                        setDropdownMenuOpen(false)
+                      }}
+                    >
+                      Tableau d'administration
+                    </Link>
+                  </li>
+                )}
+              </div>
             </>
           )}
           {pageLinks.map((page, key) => {
             return (
-              <li key={key} className="navbar-list-element">
+              <li
+                key={key}
+                className={
+                  page.name === "Connexion"
+                    ? "navbar-list-element connect-btn"
+                    : "navbar-list-element"
+                }
+              >
                 <Link
                   className="nav-link"
                   to={page.url}

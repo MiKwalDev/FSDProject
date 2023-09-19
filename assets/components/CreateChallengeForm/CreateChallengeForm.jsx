@@ -13,7 +13,7 @@ const CreateChallengeForm = ({ gameId }) => {
   const [name, setName] = useState("")
   const [rules, setRules] = useState("")
   const [status, setStatus] = useState("private")
-  const [msg, setMsg] = useState([])
+  const [msg, setMsg] = useState(null)
 
   const userId = useSelector(selectCurrentUserId)
   const dispatch = useDispatch()
@@ -30,8 +30,8 @@ const CreateChallengeForm = ({ gameId }) => {
       gameId,
     }).unwrap()
 
-    if (result.errors) {
-      setMsg(result.errors)
+    if (result.error) {
+      setMsg(result)
     } else if (result.success) {
       dispatch(
         addNewCreatedChallenge({
@@ -47,11 +47,11 @@ const CreateChallengeForm = ({ gameId }) => {
       setName("")
       setRules("")
       setStatus("private")
-      setMsg(result.success)
+      setMsg(result)
     }
 
     setTimeout(() => {
-      setMsg([])
+      setMsg(null)
     }, 5000)
   }
 
@@ -63,7 +63,7 @@ const CreateChallengeForm = ({ gameId }) => {
     document.getElementById(`${e.target.id}-label`).classList.toggle("hidden")
 
   useEffect(() => {
-    msg.length !== 0 && msgRef.current.focus()
+    msg !== null && msgRef.current.focus()
   }, [msg])
 
   let content
@@ -72,23 +72,23 @@ const CreateChallengeForm = ({ gameId }) => {
   } else {
     content = (
       <article className="create-challenge">
-        <div className="subtitle">
+        <div className="title">
           <h2>Créer un challenge</h2>
           <hr />
         </div>
 
-        {msg.length > 0 && (
+        {msg !== null && (
           <div className="messagefield">
             <small
               className={
-                msg[0].message
+                msg.error
                   ? "message err-message"
                   : "message success-message"
               }
               ref={msgRef}
               aria-live="assertive"
             >
-              {msg[0].message || msg[0]}
+              {msg.error || msg.success}
             </small>
           </div>
         )}

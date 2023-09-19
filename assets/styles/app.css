@@ -14,6 +14,8 @@
 }
 
 :root {
+    --primary-body-color: #1d1c1c;
+
     --primary-bg-color: #2A292B;
     --secondary-bg-color: #444141;
 
@@ -42,15 +44,21 @@ html, body {
     background-color: var(--secondary-bg-color);
     box-sizing: border-box;
     font-family: "Poppins";
+    height: 100%;
 }
 
 #app {
     margin-top: 40px;
+    height: 100%;
 }
 
 .container {
     width: 95%;
+    max-width: 680px;
     margin: 0 auto;
+    background-color: var(--secondary-bg-color);
+    padding: 5px;
+    min-height: 100%;
 }
 
 .hidden {
@@ -63,8 +71,21 @@ h1 {
     color: var(--primary-font-color);
 }
 
-h2 {
+.title h2,
+.title h1 {
     color: var(--primary-font-color);
+    font-family: "Poppins";
+    font-weight: bold;
+    margin-bottom: 0;
+    white-space: pre-line;
+}
+
+.title hr {
+    margin: 0;
+    padding: 0;
+    width: 10rem;
+    border: 2px solid var(--primary-btn-color);
+    border-radius: 5px;
 }
 
 h3 {
@@ -161,4 +182,86 @@ input.checked::before {
     font-family: 'Roboto';
     font-size: 1rem;
     color: var(--primary-font-color);
+}
+
+@media screen and (min-width: 630px) {
+    html, body {
+        background-color: var(--primary-body-color);
+    }
+
+    .container {
+        width: 80%;
+    }
+}
+
+@media screen and (min-width: 845px) {
+
+    .last-challenges-list .challenge-card-big {
+        width: 675px;
+        height: 280px;
+    }
+
+    .last-challenges-list .challenge-card .challenge-card-infos-big {
+        width: 665px;
+        height: 235px;
+        justify-content: flex-start;
+        gap: 10px;
+    }
+
+    .last-challenges-list .challenge-card .challenge-rules-big {
+        width: 665px;
+    }
+    
+}
+
+@media screen and (min-width: 1024px) {
+
+    .header {
+        text-transform: uppercase;
+    }
+
+    .header .navbar-toggle {
+        display: none;
+    }
+
+    .header .navbar {
+        height: 100%;
+        position: initial;
+        visibility: visible;
+        opacity: 1;
+        transition: none;
+    }
+
+    .header .navbar .navbar-list {
+        margin: 0 auto;
+        height: 100%;
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .header .navbar .navbar-list .navbar-list-element {
+        padding: 0 15px;
+    }
+
+    .header .connect-btn {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        background-color: var(--primary-btn-color);
+        text-transform: uppercase;
+    }
+
+    .header #logout-btn {
+        padding: 0;
+    }
+
+    .header .dropdown-show {
+        position: absolute;
+        top: 40px;
+    }
+
+    .header .second {
+        top: 65px;
+    }
 }

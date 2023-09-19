@@ -34,6 +34,9 @@
     position: relative;
     transition: all 5s ease-in-out;
     padding-left: 0;
+    max-width: 680px;
+    width: 100%;
+    margin: 10px auto;
 }
 
 .navbar .navbar-list .navbar-list-element {
@@ -77,7 +80,9 @@
 }
 
 .dropdown-show {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .dropdown-toggle {

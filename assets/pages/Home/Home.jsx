@@ -14,7 +14,7 @@ import "./Home.css"
 
 const Home = () => {
   const user = useSelector(selectCurrentUser)
-
+  
   const {
     data: homeData,
     isLoading,
@@ -51,21 +51,29 @@ const Home = () => {
           </div>
 
           <ul className="last-challenges-list">
-            {homeData.lastChallengesCreated.map((challenge) => {
+            {homeData.lastChallengesCreated.map((challenge, index) => {
               return (
                 <ChallengeCard
                   key={challenge.id}
+                  challengeId={challenge.id}
                   name={challenge.name}
                   creator={challenge.creator}
                   gameName={challenge.gameName}
                   rules={challenge.rules}
                   imgUrl={challenge.imgUrl}
+                  size={index === 2 ? "big" : "small"}
                 />
               )
             })}
           </ul>
         </article>
       </section>
+    )
+  } else if (isError) {
+    content = (
+      <div className="messagefield">
+        <small className="message err-message">{JSON.stringify(error)}</small>
+      </div>
     )
   }
 

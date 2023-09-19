@@ -1,11 +1,21 @@
 import React from "react"
+import { Link } from "react-router-dom"
 
-import './ChallengeCard.css'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 
-const ChallengeCard = ({ name, creator, gameName, rules, imgUrl }) => {
+import "./ChallengeCard.css"
+
+const ChallengeCard = ({ challengeId, name, creator, gameName, rules, imgUrl, size = "small" }) => {
   const content = (
-    <div className="challenge-card" style={{ backgroundImage: `url(${imgUrl})` }}>
-      <div className="challenge-card-infos">
+    <div
+      className={size === "small" ? "challenge-card" : "challenge-card challenge-card-big"}
+      style={{ backgroundImage: `url(${imgUrl})` }}
+    >
+      <Link className="see-rules" to={`/challenge/${challengeId}`}>
+        Voir les règles <FontAwesomeIcon icon={faArrowRight} />
+      </Link>
+      <div className={size === "small" ? "challenge-card-infos" : "challenge-card-infos challenge-card-infos-big"}>
         <div className="challenge-infos">
           <h3>{name}</h3>
           <span>Créé par {creator}</span>
@@ -15,7 +25,7 @@ const ChallengeCard = ({ name, creator, gameName, rules, imgUrl }) => {
           <span>{gameName}</span>
         </div>
       </div>
-      <div className="challenge-rules">
+      <div className={size === "small" ? "challenge-rules" : "challenge-rules challenge-rules-big"}>
         <span>Règles:</span>
         <span className="rules-exerpt">{rules}</span>
       </div>

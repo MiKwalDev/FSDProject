@@ -6,15 +6,13 @@ use App\Entity\UserGame;
 use App\IGDBWrapper\IGDB;
 use App\IGDBWrapper\IGDBEndpointException;
 use App\IGDBWrapper\IGDBUtils;
-use App\Repository\ChallengeRepository;
 use App\Repository\UserGameRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 #[Route('/api', name: 'api_')]
 class BacklogController extends AbstractController
@@ -40,7 +38,7 @@ class BacklogController extends AbstractController
     }
     
     #[Route('/dashboard/backlog/addgame', name: 'dashboard_backlog_addgame', methods: ['POST'])]
-    public function addGame(UserGameRepository $ugRepo, Request $request): Response
+    public function addGame(UserGameRepository $ugRepo, Request $request): JsonResponse
     {
         $user = $this->getUser();
 
@@ -69,7 +67,7 @@ class BacklogController extends AbstractController
     }
 
     #[Route("/dashboard/backlog/game", name: 'dashboard_backlog_game', methods: ['GET'])]
-    public function getGameInfos(Request $request): Response
+    public function getGameInfos(Request $request): JsonResponse
     {
         $query = $request->query;
         $gameId = $query->get("gameId");
@@ -80,16 +78,14 @@ class BacklogController extends AbstractController
 
             return $this->json([
                 "imgUrl" => $imgUrl
-            ], Response::HTTP_OK, [], [ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($obj) {
-                return $obj->getId();
-            }]);
+            ]);
         } catch (IGDBEndpointException $e) {
             return $this->json($e->getMessage());
         }
     }
 
     #[Route('/dashboard/backlog/delete', name: 'dashboard_backlog_delete', methods: ['DELETE'])]
-    public function delete(Request $request) : Response
+    public function delete(Request $request) : JsonResponse
     {
         $user = $this->getUser();
 

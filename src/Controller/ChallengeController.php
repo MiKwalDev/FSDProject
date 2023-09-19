@@ -11,10 +11,9 @@ use App\Repository\TrackedChallengeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/api', name: 'api_')]
@@ -24,7 +23,6 @@ class ChallengeController extends AbstractController
     private $challengeRepo;
     private $igdbUtils;
     private $igdb;
-
 
     public function __construct(EntityManagerInterface $entityManager, ChallengeRepository $challengeRepo, IGDBUtils $igdbUtils)
     {
@@ -43,7 +41,7 @@ class ChallengeController extends AbstractController
     }
 
     #[Route('/challenge/getchallengedata', name: 'challenge_getchallengedata', methods: ['GET'])]
-    public function getChallengeData(Request $request): Response
+    public function getChallengeData(Request $request): JsonResponse
     {
         $user = $this->getUser();
         
@@ -69,9 +67,7 @@ class ChallengeController extends AbstractController
                     "challenge" => $challenge,
                     "gameName" => $game[0]->name,
                     "imgUrl" => $imgUrl
-                ], Response::HTTP_OK, [], [ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($obj) {
-                    return $obj->getId();
-                }]);
+                ], 200, [], ["groups" => ["created_challenges"]]);
             }
 
         } else {
@@ -80,7 +76,7 @@ class ChallengeController extends AbstractController
     }
 
     #[Route('/dashboard/challenge/create', name: 'dashboard_challenge_create', methods: ['POST'])]
-    public function create(Request $request, ValidatorInterface $validator): Response
+    public function create(Request $request, ValidatorInterface $validator): JsonResponse
     {
         $user = $this->getUser();
 
@@ -106,11 +102,10 @@ class ChallengeController extends AbstractController
                 foreach ($violations as $error) {
                     $errors[] = $error;
                 }
+                
                 return $this->json([
-                    "errors" => $errors
-                ], Response::HTTP_OK, [], [ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($obj) {
-                    return $obj->getId();
-                }]);
+                    "error" => $errors[0]->getMessage()
+                ]);
             } else {
                 $this->entityManager->persist($challenge);
                 $this->entityManager->flush();
@@ -135,7 +130,7 @@ class ChallengeController extends AbstractController
     }
 
     #[Route('/dashboard/challenge/addtotracked', name: 'dashboard_challenge_addtotracked', methods: ['POST'])]
-    public function addToTracked(Request $request, TrackedChallengeRepository $trackedChallengeRepo): Response
+    public function addToTracked(Request $request, TrackedChallengeRepository $trackedChallengeRepo): JsonResponse
     {
         $user = $this->getUser();
 
@@ -159,9 +154,7 @@ class ChallengeController extends AbstractController
                     "trackedChallengeId" => $trackedChallenge->getId(),
                     "challenge" => $trackedChallenge->getChallenge(),
                     "trackedChallengeAddedAt" => $trackedChallenge->getAddedAt(),
-                ], Response::HTTP_OK, [], [ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($obj) {
-                    return $obj->getId();
-                }]);
+                ], 200, [], ["groups" => ["created_challenges"]]);
             } else {
                 return $this->json(["error" => "Tu as déjà ajouté ce challenge"]);
             }

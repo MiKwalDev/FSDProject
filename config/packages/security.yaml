@@ -24,6 +24,7 @@ security:
             jwt: ~
             refresh_jwt:
                 check_path: /api/token/refresh # or, you may use the `api_refresh_token` route name
+                provider: app_user_provider
             logout:
                 path: api_token_invalidate
         dev:

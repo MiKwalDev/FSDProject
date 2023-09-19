@@ -16,8 +16,14 @@ export const gamesApiSlice = apiSlice.injectEndpoints({
       query: () => "/home/homedata",
       providesTags: ["HomeData"],
     }),
+    getGameData: builder.query({
+      query: (gameId) => `/game/getgamedata?gameId=${gameId}`,
+    }),
   }),
 })
 
-export const { useLazySearchGamesByNameQuery, useGetHomeDataQuery } =
-  gamesApiSlice
+export const {
+  useLazySearchGamesByNameQuery,
+  useGetHomeDataQuery,
+  useGetGameDataQuery,
+} = gamesApiSlice

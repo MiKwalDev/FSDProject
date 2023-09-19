@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { useParams } from "react-router-dom"
 
 import { useSelector } from "react-redux"
@@ -65,7 +65,7 @@ const BacklogGame = () => {
         </div>
 
         <article className="tracked-challenges">
-          <div className="subtitle">
+          <div className="title">
             <h2>Mes challenges suivis</h2>
             <hr />
           </div>
@@ -77,7 +77,7 @@ const BacklogGame = () => {
         </article>
 
         <article className="creator-challenges">
-          <div className="subtitle">
+          <div className="title">
             <h2>Mes challenges créés</h2>
             <hr />
           </div>

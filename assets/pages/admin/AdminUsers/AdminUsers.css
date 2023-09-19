@@ -1,0 +1,17 @@
+.admin .users-management .users-list {
+    list-style: none;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin .users-management .users-list .users-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border: 1px solid var(--primary-font-color);
+    border-radius: 5px;
+    background-color: var(--primary-input-color);
+    padding: 5px;
+    margin-bottom: 5px;
+}

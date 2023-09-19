@@ -23,6 +23,17 @@ class TrackedChallengeRepository extends ServiceEntityRepository
         parent::__construct($registry, TrackedChallenge::class);
     }
 
+    public function findAllByUser(User $user)
+    {
+        return $this->createQueryBuilder('tc')
+            ->andWhere('tc.user = :user')
+            ->setParameter(':user', $user)
+            ->orderBy('tc.added_at', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function isAllreadyIn(User $user, Challenge $challenge)
     {
         return (boolean)$this->createQueryBuilder('tc')

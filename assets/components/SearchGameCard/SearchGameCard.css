@@ -1,0 +1,40 @@
+.search-game-card {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px auto;
+    border: 2px solid var(--primary-bg-color);
+    border-radius: 7px;
+    background-color: var(--primary-label-color);
+}
+
+.search-game-card img {
+    border-radius: 5px 0 0 5px;
+    object-fit: cover;
+}
+
+.search-game-card h4 {
+    font-size: 1rem;
+    margin: 0;
+}
+
+.search-game-card .search-game-card-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    color: var(--primary-font-color);
+    padding: 5px;
+    object-fit: cover;
+}
+
+.search-game-card .search-game-card-info .btn {
+    border: none;
+    height: 40px;
+    width: 100%;
+    border-radius: 5px;
+    background-color: var(--primary-btn-color);
+    color: var(--primary-font-color);
+    text-align: center;
+    font-weight: bold;
+}

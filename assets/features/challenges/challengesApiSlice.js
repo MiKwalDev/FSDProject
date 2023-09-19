@@ -16,7 +16,7 @@ export const challengesApiSlice = apiSlice.injectEndpoints({
           params: { name, rules, gameId, status },
         }
       },
-      invalidatesTags: ["User", "HomeData"],
+      invalidatesTags: ["User"],
     }),
     addToTrackedChallenges: builder.mutation({
       query: (arg) => {

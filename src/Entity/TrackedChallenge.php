@@ -108,4 +108,19 @@ class TrackedChallenge
 
         return $this;
     }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->getId(),
+            'challenge' => [
+                'id' => $this->challenge->getId(),
+                'name' => $this->challenge->getName()
+            ],
+            'user' => $this->user->getId(),
+            'isDone' => $this->is_done,
+            'isAbandoned' => $this->is_abandoned,
+            'addedAt' => $this->added_at
+        ];
+    }
 }
