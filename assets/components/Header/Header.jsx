@@ -11,10 +11,12 @@ import { useLazyLogoutQuery } from "../../features/auth/authApiSlice"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
+  faArrowRight,
   faChevronDown,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons"
 import "./Header.css"
+import HeaderSearchBox from "../HeaderSearchBox/HeaderSearchBox"
 
 const Header = () => {
   const location = useLocation()
@@ -33,6 +35,10 @@ const Header = () => {
           name: "Accueil",
           url: "/",
         },
+        {
+          name: "Recherche",
+          url: "",
+        },
       ]
     : [
         {
@@ -40,12 +46,16 @@ const Header = () => {
           url: "/",
         },
         {
-          name: "Connexion",
-          url: "/login",
+          name: "Recherche",
+          url: "",
         },
         {
           name: "S'inscrire",
           url: "/register",
+        },
+        {
+          name: "Connexion",
+          url: "/login",
         },
       ]
 
@@ -83,6 +93,37 @@ const Header = () => {
       </button>
       <nav className={mobileMenuOpen ? "navbar navbar-show" : "navbar"}>
         <ul className="navbar-list">
+          {pageLinks.map((page, key) => {
+            return (
+              <li
+                key={key}
+                className={
+                  page.name === "Connexion"
+                    ? "navbar-list-element connect-btn"
+                    : "navbar-list-element"
+                }
+              >
+                {page.name === "Recherche" ? (
+                  <HeaderSearchBox />
+                ) : (
+                  <Link
+                    className={
+                      page.name === "S'inscrire"
+                        ? "nav-link register-btn"
+                        : "nav-link"
+                    }
+                    to={page.url}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {page.name}{" "}
+                    {page.name === "S'inscrire" && (
+                      <FontAwesomeIcon icon={faArrowRight} />
+                    )}
+                  </Link>
+                )}
+              </li>
+            )
+          })}
           {user && (
             <>
               <button
@@ -116,6 +157,15 @@ const Header = () => {
                     Tableau de bord
                   </Link>
                 </li>
+                <li
+                  onClick={handleLogOut}
+                  id="logout-btn"
+                  className="navbar-list-element"
+                >
+                  <Link className="nav-link" to={"/"}>
+                    Se deconnecter <FontAwesomeIcon icon={faArrowRight} />
+                  </Link>
+                </li>
                 {userRoles?.includes("ROLE_ADMIN") && (
                   <li>
                     <Link
@@ -132,37 +182,6 @@ const Header = () => {
                 )}
               </div>
             </>
-          )}
-          {pageLinks.map((page, key) => {
-            return (
-              <li
-                key={key}
-                className={
-                  page.name === "Connexion"
-                    ? "navbar-list-element connect-btn"
-                    : "navbar-list-element"
-                }
-              >
-                <Link
-                  className="nav-link"
-                  to={page.url}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {page.name}
-                </Link>
-              </li>
-            )
-          })}
-          {user && (
-            <li
-              onClick={handleLogOut}
-              id="logout-btn"
-              className="navbar-list-element"
-            >
-              <Link className="nav-link" to={"/"}>
-                Se deconnecter
-              </Link>
-            </li>
           )}
         </ul>
       </nav>

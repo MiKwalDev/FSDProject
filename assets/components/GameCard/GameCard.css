@@ -9,6 +9,7 @@
     height: 240px !important;
     margin-right: 0 !important;
     margin-bottom: 10px;
+    pointer-events: none;
 }
 
 .game-card img {
@@ -25,6 +26,12 @@
     color: var(--primary-font-color);
     height: 50px;
     font-family: "Roboto";
+    pointer-events: auto;
+}
+
+.game-card:hover {
+    transform: scale(0.9);
+    transition: all 0.3s ease;
 }
 
 .game-card .game-card-info h3 {

@@ -15,7 +15,7 @@ import {
 
 const sliderConfiguration = {
   gap: 20,
-  perView: 2,
+  perView: 4,
   startAt: 0,
   type: "slider",
 }

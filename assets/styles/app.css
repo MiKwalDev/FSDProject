@@ -127,6 +127,11 @@ h3 {
     cursor: pointer;
 }
 
+.btn:hover {
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+}
+
 .circle {
     width: 10px;
     height: auto;
@@ -245,11 +250,17 @@ input.checked::before {
     }
 
     .header .connect-btn {
+        position: relative;
         display: flex;
         align-items: center;
         height: 100%;
         background-color: var(--primary-btn-color);
         text-transform: uppercase;
+    }
+
+    .header .register-btn {
+        display: block;
+        width: max-content;
     }
 
     .header #logout-btn {
@@ -259,6 +270,7 @@ input.checked::before {
     .header .dropdown-show {
         position: absolute;
         top: 40px;
+        right: 0;
     }
 
     .header .second {

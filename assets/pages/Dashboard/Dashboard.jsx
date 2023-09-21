@@ -15,7 +15,7 @@ import { selectUserActivesTrackedChallenges } from "../../features/challenges/ch
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
 import formatDate from "../../utils/formatDate/formatDate"
-import SearchBox from "../../components/SearchBox/SearchBox"
+import GamesSearchBox from "../../components/GamesSearchBox/GamesSearchBox"
 import TrackedChallengeCard from "../../components/TrackedChallengeCard/TrackedChallengeCard"
 import BacklogGameCard from "../../components/BacklogGameCard/BacklogGameCard"
 import EditProfilForm from "../../components/EditProfilForm/EditProfilForm"
@@ -122,7 +122,7 @@ const Dashboard = () => {
           <hr />
         </div>
 
-        <SearchBox />
+        <GamesSearchBox />
 
         <div className="user-backlog">
           {backlogGames.map((game, index) => {

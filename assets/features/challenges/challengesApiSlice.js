@@ -2,6 +2,10 @@ import { apiSlice } from "../../app/api/apiSlice"
 
 export const challengesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    searchChallenges: builder.query({
+      query: (search) =>
+        `/challenge/search?search=${search}`
+    }),
     getChallengeData: builder.query({
       query: (challengeId) =>
         `/challenge/getchallengedata?challengeId=${challengeId}`,
@@ -77,6 +81,7 @@ export const challengesApiSlice = apiSlice.injectEndpoints({
 })
 
 export const {
+  useLazySearchChallengesQuery,
   useGetChallengeDataQuery,
   useCreateChallengeMutation,
   useAddToTrackedChallengesMutation,

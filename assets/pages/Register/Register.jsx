@@ -5,6 +5,8 @@ import { useRegisterMutation } from "../../features/register/registerApiSlice"
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner"
 
 import "./Register.css"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons"
 
 const Register = () => {
   const userRef = useRef()
@@ -16,6 +18,14 @@ const Register = () => {
   const [errMsg, setErrMsg] = useState(null)
   const navigate = useNavigate()
 
+  const [showPwdValidation, setShowPwdValidation] = useState(false)
+  const [isPwdValid, setIsPwdValid] = useState(false)
+  const regex = new RegExp(/^([^0-9]*|[^A-Z]*|[^a-z]*|[a-zA-Z0-9]*)$/)
+
+  const [showUsernameValidation, setShowUsernameValidation] = useState(false)
+  const [isUsernameValid, setIsUsernameValid] = useState(false)
+  const uregex = new RegExp(/[^\w\d]+/)
+
   const [register, { isLoading }] = useRegisterMutation()
 
   useEffect(() => {
@@ -25,6 +35,14 @@ const Register = () => {
   useEffect(() => {
     setErrMsg(null)
   }, [username, email, password, passwordConfirm])
+
+  useEffect(() => {
+    !regex.test(password) ? setIsPwdValid(true) : setIsPwdValid(false)
+  }, [password])
+
+  useEffect(() => {
+    !uregex.test(username) && username.length > 2 ? setIsUsernameValid(true) : setIsUsernameValid(false)
+  }, [username])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -55,7 +73,8 @@ const Register = () => {
 
   const handlePwdConfirmInput = (e) => setPasswordConfirm(e.target.value)
 
-  const hideLabel = (e) => document.getElementById(`${e.target.id}-label`).classList.toggle("hidden")
+  const hideLabel = (e) =>
+    document.getElementById(`${e.target.id}-label`).classList.toggle("hidden")
 
   const content = isLoading ? (
     <LoadingSpinner />
@@ -89,12 +108,25 @@ const Register = () => {
             ref={userRef}
             value={username}
             onChange={handleUserInput}
-            onFocus={hideLabel}
-            onBlur={hideLabel}
+            onFocus={(e) => {
+              hideLabel(e)
+              setShowUsernameValidation(true)
+            }}
+            onBlur={(e) => {
+              hideLabel(e)
+              setShowUsernameValidation(false)
+            }}
             autoComplete="false"
             required
           />
         </div>
+        <small className={showUsernameValidation ? "user-validation" : "hidden"}>
+          {isUsernameValid ? (
+            <FontAwesomeIcon icon={faCheck} className="check" />
+          ) : (
+            <FontAwesomeIcon icon={faXmark} className="cross" />
+          )} Au moins 3 caractères, pas d'espace ou caractère spécial, _ autorisé
+        </small>
         <div className="input-group">
           <label htmlFor="email" id="email-label">
             Email
@@ -118,11 +150,24 @@ const Register = () => {
             id="password"
             value={password}
             onChange={handlePwdInput}
-            onFocus={hideLabel}
-            onBlur={hideLabel}
+            onFocus={(e) => {
+              hideLabel(e)
+              setShowPwdValidation(true)
+            }}
+            onBlur={(e) => {
+              hideLabel(e)
+              setShowPwdValidation(false)
+            }}
             required
           />
         </div>
+        <small className={showPwdValidation ? "pwd-validation" : "hidden"}>
+          {isPwdValid ? (
+            <FontAwesomeIcon icon={faCheck} className="check" />
+          ) : (
+            <FontAwesomeIcon icon={faXmark} className="cross" />
+          )} Au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial
+        </small>
         <div className="input-group">
           <label htmlFor="passwordConfirm" id="passwordConfirm-label">
             Confirmation du mot de passe
@@ -144,9 +189,7 @@ const Register = () => {
     </section>
   )
 
-  return (
-      content
-  )
+  return content
 }
 
 export default Register

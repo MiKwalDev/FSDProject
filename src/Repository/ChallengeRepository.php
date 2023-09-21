@@ -22,6 +22,17 @@ class ChallengeRepository extends ServiceEntityRepository
         parent::__construct($registry, Challenge::class);
     }
 
+    public function findByKeyWord(string $keyWord)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.name LIKE :keyWord')
+            ->orWhere('c.rules LIKE :keyWord')
+            ->andWhere("c.status = 'public'")
+            ->setParameter(':keyWord', "%$keyWord%")
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findAllByUser(User $user)
     {
         return $this->createQueryBuilder('c')

@@ -31,6 +31,27 @@
     margin: 1rem auto;
 }
 
+.register .form .pwd-validation,
+.register .form .user-validation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: end;
+    width: 80%;
+    margin: 0 auto;
+    color: var(--primary-font-color);
+}
+
+.register .form .cross {
+    font-size: 30px;
+    color: red;
+}
+
+.register .form .check {
+    font-size: 30px;
+    color: green;
+}
+
 .register .form .input-group {
     display: inline-block;
     border: 1px solid var(--primary-input-color);

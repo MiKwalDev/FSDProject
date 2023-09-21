@@ -12,11 +12,12 @@ import { useDispatch, useSelector } from "react-redux"
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner"
 import SearchGameCard from "../SearchGameCard/SearchGameCard"
 
-import "./SearchBox.css"
+import "./GamesSearchBox.css"
 
-const SearchBox = () => {
+const GamesSearchBox = () => {
   const msgRef = useRef()
   const [searchQuery, setSearchQuery] = useState("")
+  const [searchResultOpen, setSearchResultOpen] = useState(false)
   const [isFetching, setIsFetching] = useState(false)
 
   const userEntry = useSelector(selectUserSearchEntry)
@@ -111,4 +112,4 @@ const SearchBox = () => {
   )
 }
 
-export default SearchBox
+export default GamesSearchBox

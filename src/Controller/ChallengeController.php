@@ -40,6 +40,37 @@ class ChallengeController extends AbstractController
         $this->igdb = new IGDB($_ENV['CLIENT_ID'], $token);
     }
 
+    #[Route('/challenge/search', name: 'challenge_search', methods: ['GET'])]
+    public function searchChallenges(Request $request) : JsonResponse
+    {
+        $queryData = $request->query;
+        $keyWord = $queryData->get("search");
+
+        $challenges = $this->challengeRepo->findByKeyWord($keyWord);
+
+        if ($challenges) {
+            $findChallenges = [];
+            foreach ($challenges as $challenge) {
+                $game = $this->igdb->game("fields name; where id = {$challenge->getGameId()};");
+
+                $findChallenges[] = [
+                    "challengeId" => $challenge->getId(),
+                    "challengeName" => $challenge->getName(),
+                    "challengeGame" => $game[0]->name,
+                ];
+            }
+
+            return $this->json([
+                "challenges" => $findChallenges,
+                "keyWord" => $keyWord
+            ], 200, [], ["groups" => ["created_challenges"]]);
+        } else {
+            return $this->json([
+                "error" => "Aucun challenge trouvé"
+            ]);
+        }
+    }
+
     #[Route('/challenge/getchallengedata', name: 'challenge_getchallengedata', methods: ['GET'])]
     public function getChallengeData(Request $request): JsonResponse
     {
