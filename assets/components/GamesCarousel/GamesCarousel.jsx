@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
 
 import Glide from "@glidejs/glide"
+import { Breakpoints } from "@glidejs/glide/dist/glide.modular.esm"
 import "@glidejs/glide/src/assets/sass/glide.core.scss"
 import "@glidejs/glide/src/assets/sass/glide.theme.scss"
 import "./GamesCarousel.css"
@@ -15,7 +16,16 @@ import {
 
 const sliderConfiguration = {
   gap: 20,
+  bound: true,
   perView: 4,
+  breakpoints: {
+    490: {
+      perView: 2
+    },
+    790: {
+      perView: 3
+    }
+  },
   startAt: 0,
   type: "slider",
 }
@@ -24,7 +34,7 @@ const GamesCarousel = ({ games }) => {
   const slider = new Glide(".glide", sliderConfiguration)
 
   useEffect(() => {
-    slider.mount()
+    slider.mount({ Breakpoints })
   }, [slider, games])
 
   const content = (

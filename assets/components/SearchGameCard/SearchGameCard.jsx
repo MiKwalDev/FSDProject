@@ -1,14 +1,20 @@
 import React, { useEffect, useRef, useState } from "react"
 
+import { selectCurrentUserId } from "../../features/auth/authSlice"
+import { useDispatch, useSelector } from "react-redux"
 import { useAddGameToBacklogMutation } from "../../features/userBacklog/userBacklogApiSlice"
+import { addGameToBacklog } from "../../features/userBacklog/userBacklogSlice"
 
 import NoVisualCover from "../../styles/images/no_visual.png"
 
 import "./SearchGameCard.css"
 
 const SearchGameCard = ({ gameId, name, imgurl, imgurl2x }) => {
+  const currentUserId = useSelector(selectCurrentUserId)
   const msgRef = useRef()
-  const [msg, setMsg] = useState([])
+  const [msg, setMsg] = useState(null)
+
+  const dispatch = useDispatch()
   const [addGame, { isLoading }] = useAddGameToBacklogMutation()
 
   const handleSubmit = async (e) => {
@@ -18,15 +24,33 @@ const SearchGameCard = ({ gameId, name, imgurl, imgurl2x }) => {
       gameName: name,
       gameCover: imgurl2x,
     }).unwrap()
+
+    if (addGameResult.error) {
+      setMsg(addGameResult.error)
+
+      setTimeout(() => {
+        setMsg(null)
+      }, 5000)
+    } else if (addGameResult.success) {
+      dispatch(addGameToBacklog({
+        id: addGameResult.userGameId,
+        gameId: gameId,
+        gameName: name,
+        gameCoverUrl: imgurl2x,
+        user: currentUserId,
+        addedAt: addGameResult.addedAt
+      }))
+    }
+
     setMsg(addGameResult)
 
     setTimeout(() => {
-      setMsg([])
+      setMsg(null)
     }, 5000)
   }
 
   useEffect(() => {
-    msg.length !== 0 && msgRef.current.focus()
+    msg !== null && msgRef.current.focus()
   }, [msg])
 
   return (
@@ -34,7 +58,7 @@ const SearchGameCard = ({ gameId, name, imgurl, imgurl2x }) => {
       <img src={imgurl !== "noCover" ? imgurl : NoVisualCover} alt="cover" />
       <div className="search-game-card-info">
         <h4>{name}</h4>
-        {msg.length !== 0 ? (
+        {msg !== null ? (
           <div className="search-result messagefield">
             <small
               className={

@@ -19,6 +19,9 @@ export const gamesApiSlice = apiSlice.injectEndpoints({
     getGameData: builder.query({
       query: (gameId) => `/game/getgamedata?gameId=${gameId}`,
     }),
+    getGameCover: builder.query({
+      query: (gameId) => `/game/getgamecover?gameId=${gameId}`,
+    }),
   }),
 })
 
@@ -26,4 +29,5 @@ export const {
   useLazySearchGamesByNameQuery,
   useGetHomeDataQuery,
   useGetGameDataQuery,
+  useGetGameCoverQuery,
 } = gamesApiSlice

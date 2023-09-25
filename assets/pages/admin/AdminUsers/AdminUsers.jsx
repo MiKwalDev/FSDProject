@@ -5,6 +5,7 @@ import AdminSideBar from "../../../components/AdminSideBar/AdminSideBar"
 import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner"
 
 import "./AdminUsers.css"
+import DeleteUserForm from "../../../components/DeleteUserForm/DeleteUserForm"
 
 const AdminUsers = () => {
   const {
@@ -36,6 +37,7 @@ const AdminUsers = () => {
                 return (
                   <li key={user.id} className="users-list-item">
                     {user.username}
+                    <DeleteUserForm userId={user.id} />
                   </li>
                 )
               })}

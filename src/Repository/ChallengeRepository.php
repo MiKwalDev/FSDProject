@@ -72,7 +72,7 @@ class ChallengeRepository extends ServiceEntityRepository
             ->addSelect('COUNT(c.id) as challenges')
             ->groupBy('c.game_id')
             ->orderBy('challenges', 'DESC')
-            ->setMaxResults(5)
+            ->setMaxResults(8)
             ->getQuery()
             ->getResult();
     }

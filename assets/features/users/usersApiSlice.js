@@ -4,6 +4,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getUsersList: builder.query({
       query: () => '/admin/userslist',
+      providesTags: ["UsersList"]
     }),
     getCurrentUserData: builder.query({
       query: credentials => ({
@@ -12,6 +13,14 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         body: {...credentials}
       }),
       providesTags: ['User']
+    }),
+    deleteUser: builder.mutation({
+      query: (userId) => ({
+        url: '/admin/user/delete',
+        method: 'DELETE',
+        params: userId
+      }),
+      invalidatesTags: ["UsersList"]
     }),
     modifyProfil: builder.mutation({
       query: (arg) => {
@@ -30,5 +39,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetUsersListQuery,
   useGetCurrentUserDataQuery,
+  useDeleteUserMutation,
   useModifyProfilMutation
 } = usersApiSlice

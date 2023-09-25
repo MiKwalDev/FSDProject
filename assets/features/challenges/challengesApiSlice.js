@@ -22,6 +22,17 @@ export const challengesApiSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["User"],
     }),
+    editChallenge: builder.mutation({
+      query: (arg) => {
+        const { challengeId, name, rules } = arg
+        return {
+          url: "/admin/challenge/edit",
+          method: "UPDATE",
+          params: { challengeId, name, rules },
+        }
+      },
+      invalidatesTags: ["Challenge"]
+    }),
     addToTrackedChallenges: builder.mutation({
       query: (arg) => {
         const { challengeId } = arg
@@ -84,6 +95,7 @@ export const {
   useLazySearchChallengesQuery,
   useGetChallengeDataQuery,
   useCreateChallengeMutation,
+  useEditChallengeMutation,
   useAddToTrackedChallengesMutation,
   useToggleIsDoneMutation,
   useToggleIsAbandonedMutation,

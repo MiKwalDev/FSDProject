@@ -8,6 +8,9 @@ const userBacklogSlice = createSlice({
       const games = action.payload
       state.games = games
     },
+    addGameToBacklog: (state, action) => {
+      state.games.push(action.payload)
+    },
     removeGameFromBacklog: (state, action) => {
       state.games.splice(
         state.games.findIndex((game) => game.id === action.payload),
@@ -17,7 +20,7 @@ const userBacklogSlice = createSlice({
   },
 })
 
-export const { setGames, removeGameFromBacklog } = userBacklogSlice.actions
+export const { addGameToBacklog ,setGames, removeGameFromBacklog } = userBacklogSlice.actions
 
 export default userBacklogSlice.reducer
 

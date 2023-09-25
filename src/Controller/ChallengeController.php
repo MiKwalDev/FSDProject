@@ -8,6 +8,7 @@ use App\IGDBWrapper\IGDB;
 use App\IGDBWrapper\IGDBUtils;
 use App\Repository\ChallengeRepository;
 use App\Repository\TrackedChallengeRepository;
+use App\Repository\UserGameRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -93,11 +94,13 @@ class ChallengeController extends AbstractController
                 $game = $this->igdb->game("fields id,name,cover; where id = {$challenge->getGameId()};");
                 $cover = $this->igdb->cover("fields id,image_id,game; where game = {$game[0]->id};");
                 $cover ? $imgUrl = $this->igdbUtils->image_url($cover[0]->image_id, "screenshot_big") : $imgUrl = "noCover";
+                $cover ? $imgUrl2x = $this->igdbUtils->image_url($cover[0]->image_id, "cover_small_2x") : $imgUrl = "noCover";
 
                 return $this->json([
                     "challenge" => $challenge,
                     "gameName" => $game[0]->name,
-                    "imgUrl" => $imgUrl
+                    "imgUrl" => $imgUrl,
+                    "imgUrl2x" => $imgUrl2x,
                 ], 200, [], ["groups" => ["created_challenges"]]);
             }
 
@@ -161,7 +164,7 @@ class ChallengeController extends AbstractController
     }
 
     #[Route('/dashboard/challenge/addtotracked', name: 'dashboard_challenge_addtotracked', methods: ['POST'])]
-    public function addToTracked(Request $request, TrackedChallengeRepository $trackedChallengeRepo): JsonResponse
+    public function addToTracked(Request $request, TrackedChallengeRepository $trackedChallengeRepo, UserGameRepository $backlogRepo): JsonResponse
     {
         $user = $this->getUser();
 
@@ -173,6 +176,12 @@ class ChallengeController extends AbstractController
             $exists = $trackedChallengeRepo->isAllreadyIn($user, $challenge);
 
             if ($exists === false) {
+                $isGameInBacklog = $backlogRepo->isAllreadyIn($user, $challenge->getGameId());
+
+                if ($isGameInBacklog === false) {
+                    return $this->json(["error" => "Ce jeux n'existe pas dans ton backlog"]);
+                }
+
                 $trackedChallenge = new TrackedChallenge();
                 $trackedChallenge->setChallenge($challenge);
                 $trackedChallenge->setUser($user);
@@ -183,7 +192,11 @@ class ChallengeController extends AbstractController
                 return $this->json([
                     "success" => "Le challenge à été ajouté à tes challenges en cours",
                     "trackedChallengeId" => $trackedChallenge->getId(),
-                    "challenge" => $trackedChallenge->getChallenge(),
+                    "challenge" => [
+                        "id" => $trackedChallenge->getChallenge()->getId(),
+                        "name" => $trackedChallenge->getChallenge()->getName(),
+                        "gameId" => $trackedChallenge->getChallenge()->getGameId(),
+                    ],
                     "trackedChallengeAddedAt" => $trackedChallenge->getAddedAt(),
                 ], 200, [], ["groups" => ["created_challenges"]]);
             } else {

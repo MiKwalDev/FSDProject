@@ -65,6 +65,7 @@ const Header = () => {
     triggerLogout()
 
     setMobileMenuOpen(false)
+    setDropdownMenuOpen(false)
     dispatch(logOut())
   }
 
@@ -157,15 +158,6 @@ const Header = () => {
                     Tableau de bord
                   </Link>
                 </li>
-                <li
-                  onClick={handleLogOut}
-                  id="logout-btn"
-                  className="navbar-list-element"
-                >
-                  <Link className="nav-link" to={"/"}>
-                    Se deconnecter <FontAwesomeIcon icon={faArrowRight} />
-                  </Link>
-                </li>
                 {userRoles?.includes("ROLE_ADMIN") && (
                   <li>
                     <Link
@@ -180,6 +172,15 @@ const Header = () => {
                     </Link>
                   </li>
                 )}
+                <li
+                  onClick={handleLogOut}
+                  id="logout-btn"
+                  className="navbar-list-element"
+                >
+                  <Link className="nav-link" to={"/"}>
+                    Se deconnecter <FontAwesomeIcon icon={faArrowRight} />
+                  </Link>
+                </li>
               </div>
             </>
           )}

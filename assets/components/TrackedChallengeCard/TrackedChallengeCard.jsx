@@ -3,12 +3,16 @@ import { Link } from "react-router-dom"
 
 import { useDispatch } from "react-redux"
 
+import { useGetGameCoverQuery } from "../../features/igdb/gamesApiSlice"
 import {
   useRemoveFromTrackedChallengesMutation,
   useToggleIsAbandonedMutation,
   useToggleIsDoneMutation,
 } from "../../features/challenges/challengesApiSlice"
-import { removeChallengeFromTracked, updateTrackedChallengeStatus } from "../../features/challenges/challengesSlice"
+import {
+  removeChallengeFromTracked,
+  updateTrackedChallengeStatus,
+} from "../../features/challenges/challengesSlice"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
@@ -31,6 +35,14 @@ const TrackedChallengeCard = ({ trackedChallenge }) => {
   })
   const [isChecked, setIsChecked] = useState(false)
   const [isAbandoned, setIsAbandoned] = useState(false)
+
+  const {
+    data: gameCoverUrl,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetGameCoverQuery(trackedChallenge.challenge.gameId)
 
   const [toggleIsDone] = useToggleIsDoneMutation()
   const [toggleIsAbandoned] = useToggleIsAbandonedMutation()
@@ -66,10 +78,12 @@ const TrackedChallengeCard = ({ trackedChallenge }) => {
         }, 5000)
       } else if (toggleIsDoneResult.success) {
         setIsChecked(!isChecked)
-        dispatch(updateTrackedChallengeStatus({
-          challengeId: Number(trackedChallenge.id),
-          field: "isDone"
-        }))
+        dispatch(
+          updateTrackedChallengeStatus({
+            challengeId: Number(trackedChallenge.id),
+            field: "isDone",
+          })
+        )
       }
     }
   }
@@ -110,10 +124,12 @@ const TrackedChallengeCard = ({ trackedChallenge }) => {
         }, 5000)
       } else if (toggleIsAbandonedResult.success) {
         setIsAbandoned(!isAbandoned)
-        dispatch(updateTrackedChallengeStatus({
-          challengeId: Number(trackedChallenge.id),
-          field: "isAbandoned"
-        }))
+        dispatch(
+          updateTrackedChallengeStatus({
+            challengeId: Number(trackedChallenge.id),
+            field: "isAbandoned",
+          })
+        )
       }
     }
   }
@@ -142,9 +158,10 @@ const TrackedChallengeCard = ({ trackedChallenge }) => {
         show: false,
       })
 
-      const removeFromTrackedChallengesResult = await removeFromTrackedChallenges({
-        trackedChallengeId: Number(trackedChallenge.id),
-      }).unwrap()
+      const removeFromTrackedChallengesResult =
+        await removeFromTrackedChallenges({
+          trackedChallengeId: Number(trackedChallenge.id),
+        }).unwrap()
 
       if (removeFromTrackedChallengesResult.error) {
         setMsg(removeFromTrackedChallengesResult.error)
@@ -176,72 +193,75 @@ const TrackedChallengeCard = ({ trackedChallenge }) => {
   }, [])
 
   const content = (
-    <li>
-      <ConfimDial
-        isOpen={checkConfirmDial.show}
-        subject={"complétion/non complété"}
-        validationFunc={handleCheckConfirmValidation}
-        cancelFunc={handleCheckConfirmCancel}
-      />
-      <ConfimDial
-        isOpen={abandonConfirmDial.show}
-        subject={"abandon/reprise"}
-        validationFunc={handleAbandonConfirmValidation}
-        cancelFunc={handleAbandonConfirmCancel}
-      />
-      <ConfimDial
-        isOpen={deleteConfirmDial.show}
-        subject={"suppression"}
-        validationFunc={handleDeleteConfirmValidation}
-        cancelFunc={handleDeleteConfirmCancel}
-      />
-      {msg !== "" && (
-        <div className="messagefield">
-          <small
-            className={"message err-message"}
-            ref={msgRef}
-            aria-live="assertive"
-          >
-            {msg}
-          </small>
-        </div>
-      )}
-      <Link to={`/challenge/${trackedChallenge.challenge.id}`}>
-        <h3>{trackedChallenge.challenge.name}</h3>
-        <span>
-          Voir les règles <FontAwesomeIcon icon={faArrowRight} />
-        </span>
-      </Link>
-      <div className="tracked-challenge-status">
-        <div className="input-group">
-          <label htmlFor="is_done" className="label">
-            Complété:
-          </label>
-          <div className="custom-checkbox">
-            <input
-              type="checkbox"
-              name="is_done"
-              id="is_done"
-              className={isChecked ? "checked" : ""}
-              onChange={handleOnChangeCheck}
-              checked={isChecked}
-            />
+    <li style={{ backgroundImage: `url(${isSuccess && gameCoverUrl})` }}>
+      <div className="filter">
+
+        <ConfimDial
+          isOpen={checkConfirmDial.show}
+          subject={"complétion/non complété"}
+          validationFunc={handleCheckConfirmValidation}
+          cancelFunc={handleCheckConfirmCancel}
+        />
+        <ConfimDial
+          isOpen={abandonConfirmDial.show}
+          subject={"abandon/reprise"}
+          validationFunc={handleAbandonConfirmValidation}
+          cancelFunc={handleAbandonConfirmCancel}
+        />
+        <ConfimDial
+          isOpen={deleteConfirmDial.show}
+          subject={"suppression"}
+          validationFunc={handleDeleteConfirmValidation}
+          cancelFunc={handleDeleteConfirmCancel}
+        />
+        {msg !== "" && (
+          <div className="messagefield">
+            <small
+              className={"message err-message"}
+              ref={msgRef}
+              aria-live="assertive"
+            >
+              {msg}
+            </small>
+          </div>
+        )}
+        <Link to={`/challenge/${trackedChallenge.challenge.id}`}>
+          <h3>{trackedChallenge.challenge.name}</h3>
+          <span>
+            Voir les règles <FontAwesomeIcon icon={faArrowRight} />
+          </span>
+        </Link>
+        <div className="tracked-challenge-status">
+          <div className="input-group">
+            <label htmlFor="is_done" className="label">
+              Complété:
+            </label>
+            <div className="custom-checkbox">
+              <input
+                type="checkbox"
+                name="is_done"
+                id="is_done"
+                className={isChecked ? "checked" : ""}
+                onChange={handleOnChangeCheck}
+                checked={isChecked}
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="tracked-challenge-buttons">
-        {isAbandoned ? (
-          <button className="btn retry-btn" onClick={handleAbandonBtn}>
-            Reprendre
+        <div className="tracked-challenge-buttons">
+          {isAbandoned ? (
+            <button className="btn retry-btn" onClick={handleAbandonBtn}>
+              Reprendre
+            </button>
+          ) : (
+            <button className="btn abandon-btn" onClick={handleAbandonBtn}>
+              Abandonner
+            </button>
+          )}
+          <button className="btn delete-btn" onClick={handleDeleteBtn}>
+            Supprimer de ma liste
           </button>
-        ) : (
-          <button className="btn abandon-btn" onClick={handleAbandonBtn}>
-            Abandonner
-          </button>
-        )}
-        <button className="btn delete-btn" onClick={handleDeleteBtn}>
-          Supprimer de ma liste
-        </button>
+        </div>
       </div>
     </li>
   )

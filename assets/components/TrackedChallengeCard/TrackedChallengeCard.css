@@ -5,15 +5,24 @@
     border: 1px solid var(--primary-bg-color);
     background-color: var(--primary-label-color);
     border-radius: 5px;
-    padding: 5px;
     margin-bottom: 5px;
+    background-position: top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    box-shadow: 0 4px 0 0 rgba(0, 0, 0, 0.5);
+}
+
+.tracked-challenges .tracked-challenges-list li .filter {
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.60);
 }
 
 .tracked-challenges .tracked-challenges-list li a {
     display: flex;
     justify-content: space-between;
     text-decoration: none;
-    color: var(--secondary-font-color);
+    color: var(--primary-font-color);
 }
 
 .tracked-challenges .tracked-challenges-list li a span {
@@ -21,6 +30,7 @@
 }
 
 .tracked-challenges .tracked-challenges-list .tracked-challenge-status {
+    color: var(--primary-font-color);
     margin: 10px;
 }
 

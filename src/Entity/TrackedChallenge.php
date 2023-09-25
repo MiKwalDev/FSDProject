@@ -115,7 +115,8 @@ class TrackedChallenge
             'id' => $this->getId(),
             'challenge' => [
                 'id' => $this->challenge->getId(),
-                'name' => $this->challenge->getName()
+                'name' => $this->challenge->getName(),
+                'gameId' => $this->challenge->getGameId()
             ],
             'user' => $this->user->getId(),
             'isDone' => $this->is_done,

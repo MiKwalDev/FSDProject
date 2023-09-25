@@ -57,7 +57,11 @@ class BacklogController extends AbstractController
                 $this->entityManager->persist($userGame);
                 $this->entityManager->flush();
     
-                return $this->json(["success" => "Le jeu à été ajouté à ton backlog"]);
+                return $this->json([
+                    "success" => "Le jeu à été ajouté à ton backlog",
+                    "userGameId" => $userGame->getId(),
+                    "addedAt" => $userGame->getAddedAt()
+                ]);
             } else {
                 return $this->json(["error" => "Tu as déjà ajouté ce jeu"]);
             }

@@ -113,7 +113,7 @@ class UserGame
             'gameName' => $this->game_name,
             'gameCoverUrl' => $this->game_cover_url,
             'user' => $this->user->getId(),
-            'addedAt' => $this->added_at
+            'addedAt' => $this->getAddedAt()->format("Y-m-d\\TH:i:sP")
         ];
     }
 }

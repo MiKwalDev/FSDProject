@@ -1,0 +1,9 @@
+.form .btn-delete {
+    border: none;
+    height: 40px;
+    border-radius: 5px;
+    background-color: var(--primary-err-color);
+    color: var(--primary-font-color);
+    text-align: center;
+    font-weight: bold;
+}

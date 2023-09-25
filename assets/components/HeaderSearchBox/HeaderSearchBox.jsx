@@ -44,10 +44,6 @@ const HeaderSearchBox = () => {
     return () => clearTimeout(searchTimeout)
   }, [searchQuery])
 
-  useEffect(() => {
-    challenges && console.log(challenges)
-  }, [challenges])
-
   let searchResult
   if (isFetching) {
     searchResult = <LoadingSpinner />

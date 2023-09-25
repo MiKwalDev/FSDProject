@@ -1,0 +1,61 @@
+.edit-challenge .form {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem auto;
+}
+
+.edit-challenge .form .input-group {
+    display: inline-block;
+    border: 1px solid var(--primary-input-color);
+    border-radius: 5px;
+    background-color: var(--primary-input-color);
+    width: 90%;
+    margin: 5px auto;
+    min-height: 40px;
+    padding-left: 5px;
+}
+
+.edit-challenge .form .input-group .label {
+    display: block;
+    font-size: 1rem;
+    color: var(--primary-label-color);
+}
+
+.edit-challenge .form .input-group input[type="text"] {
+    outline: none;
+    border: none;
+    display: block;
+    line-height: 1.2em;
+    font-size: 14pt;
+    font-weight: bold;
+    color: var(--secondary-bg-color);
+    width: 90%;
+    background-color: var(--primary-input-color);
+}
+
+.edit-challenge .form .input-group textarea {
+    display: block;
+    width: 95%;
+    height: 100px;
+    margin: 5px auto;
+    font-size: 14pt;
+    font-weight: bold;
+    color: var(--secondary-bg-color);
+}
+
+.edit-challenge .form .validation {
+    display: flex;
+    justify-content: end;
+    width: 90%;
+    margin: 5px auto;
+}
+
+.edit-challenge .form .validation .btn {
+    border: none;
+    height: 40px;
+    border-radius: 5px;
+    background-color: var(--primary-btn-color);
+    color: var(--primary-font-color);
+    text-align: center;
+    font-weight: bold;
+}

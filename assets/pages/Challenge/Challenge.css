@@ -77,3 +77,24 @@
     text-align: center;
     font-weight: bold;
 }
+
+.challenge .moderation .btn-edit {
+    border: none;
+    height: 40px;
+    border-radius: 5px;
+    background-color: var(--primary-edit-color);
+    color: var(--primary-font-color);
+    text-align: center;
+    font-weight: bold;
+}
+
+.challenge .add .btn-add {
+    border: none;
+    height: 40px;
+    width: 100%;
+    border-radius: 5px;
+    background-color: var(--primary-btn-color);
+    color: var(--primary-font-color);
+    text-align: center;
+    font-weight: bold;
+}

@@ -76,6 +76,7 @@
 .dropdown {
     background-color: var(--primary-bg-color);
     margin: 0 0 0 15px;
+    border-radius: 5px;
     display: none;
 }
 
